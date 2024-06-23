@@ -39,15 +39,15 @@ const NavBar = (props) => {
                     )}
 
                     {props.type === 'student' && (
-                        <Link to={`/studentHome/PreviousTeam/${props.username}`} className="link-button"><button>Previous Teams</button></Link>
+                        <Link to={`/studentHome/PreviousTeam/`} className="link-button"><button>Previous Teams</button></Link>
                     )}
 
                     {props.type === 'student' && (
-                        <Link to={`/studentHome/Results/${props.username}`} className="link-button"><button>Results</button></Link>
+                        <Link to={`/studentHome/Results/`} className="link-button"><button>Results</button></Link>
                     )}
                    
                     {props.type === 'student' && (
-                        <Link to={`/studentHome/JoinTeam/${props.username}`} className="link-button"><button>Join Team</button></Link>
+                        <Link to={`/studentHome/JoinTeam/`} className="link-button"><button>Join Team</button></Link>
                     )}
 
                     {props.type === 'student' && (
@@ -64,11 +64,11 @@ const NavBar = (props) => {
 
 
                     {props.type === 'admin' && (
-                        <Link to={`/adminHome/previousQuiz/${props.username}`} className="link-button"><button>Previous Quiz</button></Link>
+                        <Link to={`/adminHome/quiz`} className="link-button"><button>Quiz</button></Link>
                     )}
 
                     {props.type === 'admin' && (
-                        <Link to={`/adminHome/previousTeam/${props.username}`} className="link-button"><button>Previous Teams</button></Link>
+                        <Link to={`/adminHome/team`} className="link-button"><button>Teams</button></Link>
                     )}
                     
                     {props.type === 'admin' && (
@@ -76,8 +76,8 @@ const NavBar = (props) => {
                             <button className="dropbtn">+</button>
                             {isCreateMenuOpen && (
                                 <div className="dropdown-content">
-                                    <Link to={`/adminHome/createQuiz/${props.username}`} >Quiz</Link>
-                                    <Link to={`/adminHome/createTeam/${props.username}`} >Team</Link>
+                                    <Link to={`/adminHome/createQuiz/`} >Quiz</Link>
+                                    <Link to={`/adminHome/createTeam/`} >Team</Link>
                                 </div>
                             )}
                         </div>
