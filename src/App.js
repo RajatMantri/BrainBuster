@@ -1,6 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Routes, Route,Link, Navigate } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 
 
 //Styling
@@ -13,6 +12,12 @@ import './Screens/ScreensStyling/Admin/createQuiz.css';
 import './Screens/ScreensStyling/Admin/createTeam.css';
 import './Screens/ScreensStyling/Admin/adminQuizList.css';
 import './Screens/ScreensStyling/Admin/viewQuiz.css';
+import './Screens/ScreensStyling/Admin/adminTeamList.css';
+import "./Screens/ScreensStyling/Admin/viewTeamquizzes.css"
+import "./Screens/ScreensStyling/Admin/addQuizToTeam.css"
+import "./Screens/ScreensStyling/Admin/deleteQuiz.css"
+
+
 
 //Components
 import Home from './Screens/Home';
@@ -26,39 +31,34 @@ import CreateTeam from './Screens/Admin/CreateTeam.js';
 import AdminQuizList from './Screens/Admin/AdminQuizList.js';
 import ViewQuiz from './Screens/Admin/ViewQuiz.js';
 import AdminTeamList from './Screens/Admin/AdminTeamList.js';
-import ManageTeam from './Screens/Admin/ManageTeam.js';
+import DeleteQuiz from './Screens/Admin/DeleteQuiz.js';
+import AddQuizToTeam from './Screens/Admin/AddQuizToTeam.js';
+import ViewTeamQuizzes from './Screens/Admin/ViewTeamQuizzes'
 
-const App = ()=>{
+const App = () => {
 
-  const [authToken, setAuthToken] = useState("");
-
-  useEffect(() => {
-      // Check if authToken exists in localStorage
-      const token = localStorage.getItem('authToken');
-      setAuthToken(token);
-  }, []);
-
-return(
-  <div>
-<Routes>
-  <Route path='/'  element={<Home type='home'/>} />
-  <Route path='/login'  element={<Login />} />  
-  <Route path='/signUp'  element={<SignUp />} />
-  <Route path="/adminHome" element={<AdminHome />} />
-  <Route path="/studentHome" element={<StudentHome />}/>
-  <Route path="/studentHome" element={<StudentHome />}/>
-  <Route path="/adminHome/createQuiz" element={<CreateQuiz/>} />
-  <Route path="/adminHome/createTeam" element={<CreateTeam/>} />
-  <Route path="/adminHome/quiz" element={<AdminQuizList/>} />
-  <Route path="/adminHome/quiz/:quizId" element={<ViewQuiz/>} />
-  <Route path="/adminHome/team" element={<AdminTeamList/>} />
-  <Route path="/adminHome/team" element={<AdminTeamList/>} />
-  <Route path="/adminHome/team/manage/:quizId" element={<ManageTeam/>} />
-  <Route path="*" element={<NotFound />} />
-</Routes>
-  </div>
-)
+  return (
+    <div>
+      <Routes>
+        <Route path='/' element={<Home type='home' />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signUp' element={<SignUp />} />
+        <Route path="/adminHome" element={<AdminHome /> }/>
+        <Route path="/studentHome" element={ <StudentHome />} />
+        <Route path="/adminHome/createQuiz" element={ <CreateQuiz /> } />
+        <Route path="/adminHome/createTeam" element={<CreateTeam /> } />
+        <Route path="/adminHome/quiz" element={<AdminQuizList /> } />
+        <Route path="/adminHome/quiz/:quizId" element={ <ViewQuiz /> } />
+        <Route path="/quiz/:quizId" element={ <ViewQuiz /> } />
+        <Route path="/adminHome/team" element={<AdminTeamList /> } />
+        <Route path="quizzes/:teamId" element={<AddQuizToTeam/>} />
+        <Route path="quizzes/delete/:teamId" element={<DeleteQuiz/>} />
+        <Route path="team/:teamId" element={<ViewTeamQuizzes/>} />
+        
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  )
 }
 
 export default App;
-

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import NotFound from "../../Components/NotFound";
 
 const AdminQuizList = () => {
   const username = localStorage.getItem('username');
@@ -32,20 +33,28 @@ const AdminQuizList = () => {
   };
 
   return (
-    <div className="quiz-list-container">
-      <h2>Quizzes associated with {username}</h2>
-      <ul>
-        {quizzes.map((quiz) => (
-          <li key={quiz._id}>
-            {quiz.title}
-            <div>
-              <button className="delete-btn" onClick={() => handleDeleteQuiz(quiz._id)}>Delete</button>
-              <Link to={`/adminHome/quiz/${quiz._id}`}><button className="view-btn">View Quiz</button></Link>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      {localStorage.getItem('username') ? (
+        <div>
+          <div className="quiz-list-container">
+            <h2>Quizzes associated with {username}</h2>
+            <ul>
+              {quizzes.map((quiz) => (
+                <li key={quiz._id}>
+                  {quiz.title}
+                  <div>
+                    <button className="delete-btn" onClick={() => handleDeleteQuiz(quiz._id)}>Delete</button>
+                    <Link to={`/adminHome/quiz/${quiz._id}`}><button className="view-btn">View Quiz</button></Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <NotFound />
+      )}
+    </>
   );
 };
 

@@ -9,4 +9,4 @@ const teamSchema = new mongoose.Schema({
     quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' }] // Array of quiz IDs associated with the team
   });
 
-  module.exports = mongoose.model('team',teamSchema);
+  module.exports = mongoose.model('Team',teamSchema);

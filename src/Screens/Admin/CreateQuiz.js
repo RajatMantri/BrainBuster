@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import NotFound from "../../Components/NotFound";
+
 
 const Quiz = () => {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -47,7 +49,7 @@ const Quiz = () => {
     const updatedQuestions = [...questions];
     updatedQuestions[index].type = type;
     updatedQuestions[index].options = type === 'multipleChoice' ? updatedOptions : [];
-    
+
     // Set correctAnswer for True/False questions
     if (type === 'trueFalse') {
       updatedQuestions[index].correctAnswer = 0; // Default to 0 (true)
@@ -99,7 +101,7 @@ const Quiz = () => {
   const handleSubmitQuiz = () => {
     // Check if any question does not have a correctAnswer selected
     const hasUnansweredQuestions = questions.some(question => question.correctAnswer === null);
-    
+
     if (hasUnansweredQuestions) {
       alert('Please select a correct answer for all questions before submitting.');
       return; // Exit early if there are unanswered questions
@@ -123,107 +125,115 @@ const Quiz = () => {
   };
 
   return (
-    <div className="quiz-container">
-      <input className={`quiz-title ${isEditingTitle ? 'editing' : ''}`} onClick={handleTitleClick} 
-      type = "text"
-      value = {quizTitle} 
-      onChange={handleQuizTitleChange} 
-      onBlur={handleTitleBlur} 
-      autoFocus
-      />
+    <>
+      {localStorage.getItem('username') ? (
+        <div>
+          <div className="quiz-container">
+            <input className={`quiz-title ${isEditingTitle ? 'editing' : ''}`} onClick={handleTitleClick}
+              type="text"
+              value={quizTitle}
+              onChange={handleQuizTitleChange}
+              onBlur={handleTitleBlur}
+              autoFocus
+            />
 
-      {questions.map((question, index) => (
-        <div key={question.id} className="question-container">
-          <input
-            type="text"
-            value={question.title}
-            onChange={(e) => handleQuestionTitleChange(index, e)}
-            className="question-input"
-          />
-          <select
-            value={question.type}
-            onChange={(e) => handleQuestionTypeChange(index, e)}
-            className="select-type"
-          >
-            <option value="multipleChoice">MCQs</option>
-            <option value="trueFalse">True/False</option>
-            <option value="paragraph">Paragraph</option>
-          </select>
+            {questions.map((question, index) => (
+              <div key={question.id} className="question-container">
+                <input
+                  type="text"
+                  value={question.title}
+                  onChange={(e) => handleQuestionTitleChange(index, e)}
+                  className="question-input"
+                />
+                <select
+                  value={question.type}
+                  onChange={(e) => handleQuestionTypeChange(index, e)}
+                  className="select-type"
+                >
+                  <option value="multipleChoice">MCQs</option>
+                  <option value="trueFalse">True/False</option>
+                  <option value="paragraph">Paragraph</option>
+                </select>
 
-          {question.type === 'multipleChoice' && (
-            <div>
-              {question.options.map((option, optionIndex) => (
-                <div key={optionIndex} className="option-container">
-                  <input
-                    type="radio"
-                    name={`correctAnswer${index}`}
-                    checked={question.correctAnswer === optionIndex}
-                    onChange={() => handleCorrectAnswerChange(index, optionIndex)}
-                    className="option-radio"
-                  />
-                  <input
-                    type="text"
-                    value={option}
-                    onChange={(e) => handleOptionChange(index, optionIndex, e)}
-                    className="option-input"
-                  />
+                {question.type === 'multipleChoice' && (
+                  <div>
+                    {question.options.map((option, optionIndex) => (
+                      <div key={optionIndex} className="option-container">
+                        <input
+                          type="radio"
+                          name={`correctAnswer${index}`}
+                          checked={question.correctAnswer === optionIndex}
+                          onChange={() => handleCorrectAnswerChange(index, optionIndex)}
+                          className="option-radio"
+                        />
+                        <input
+                          type="text"
+                          value={option}
+                          onChange={(e) => handleOptionChange(index, optionIndex, e)}
+                          className="option-input"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {question.type === 'trueFalse' && (
+                  <div>
+                    <div className="option-container">
+                      <input
+                        type="radio"
+                        name={`trueFalseOption${index}`}
+                        value="True"
+                        checked={question.correctAnswer === 0}
+                        onChange={() => handleCorrectAnswerChange(index, 0)}
+                        className="option-radio"
+                      />
+                      <label className="correct-answer-label">True</label>
+                    </div>
+                    <div className="option-container">
+                      <input
+                        type="radio"
+                        name={`trueFalseOption${index}`}
+                        value="False"
+                        checked={question.correctAnswer === 1}
+                        onChange={() => handleCorrectAnswerChange(index, 1)}
+                        className="option-radio"
+                      />
+                      <label className="correct-answer-label">False</label>
+                    </div>
+                  </div>
+                )}
+
+                {question.type === 'paragraph' && (
+                  <div className="option-container">
+                    <input
+                      type="text"
+                      placeholder="Type your answer here..."
+                      onChange={(e) => handleOptionChange(index, 0, e)}
+                      className="option-input"
+                    />
+                  </div>
+                )}
+
+                <div className="button-container">
+                  <button onClick={() => handleDeleteQuestion(index)} className="delete-button">Delete Question</button>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {question.type === 'trueFalse' && (
-            <div>
-              <div className="option-container">
-                <input
-                  type="radio"
-                  name={`trueFalseOption${index}`}
-                  value="True"
-                  checked={question.correctAnswer === 0}
-                  onChange={() => handleCorrectAnswerChange(index, 0)}
-                  className="option-radio"
-                />
-                <label className="correct-answer-label">True</label>
               </div>
-              <div className="option-container">
-                <input
-                  type="radio"
-                  name={`trueFalseOption${index}`}
-                  value="False"
-                  checked={question.correctAnswer === 1}
-                  onChange={() => handleCorrectAnswerChange(index, 1)}
-                  className="option-radio"
-                />
-                <label className="correct-answer-label">False</label>
-              </div>
-            </div>
-          )}
+            ))}
 
-          {question.type === 'paragraph' && (
-            <div className="option-container">
-              <input
-                type="text"
-                placeholder="Type your answer here..."
-                onChange={(e) => handleOptionChange(index, 0, e)}
-                className="option-input"
-              />
+            <div className="button-container">
+              <button onClick={handleAddQuestion} className="add-button">Add Question</button>
             </div>
-          )}
 
-          <div className="button-container">
-            <button onClick={() => handleDeleteQuestion(index)} className="delete-button">Delete Question</button>
+            <div className="button-container">
+              <button onClick={handleSubmitQuiz} className="submit-button">Submit Quiz</button>
+            </div>
           </div>
         </div>
-      ))}
-      
-      <div className="button-container">
-        <button onClick={handleAddQuestion} className="add-button">Add Question</button>
-      </div>
-
-      <div className="button-container">
-       <button onClick={handleSubmitQuiz} className="submit-button">Submit Quiz</button>
-      </div>
-    </div>
+      ) : (
+        <NotFound />
+      )}
+    </>
   );
 };
 

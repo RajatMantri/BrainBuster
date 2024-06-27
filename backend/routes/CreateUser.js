@@ -8,21 +8,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const jwtSecret = "My-Authourization-Token-Secret";
 
-// 
-const fetchUser = (req, res, next) => {
-  const token = localStorage('authToken');
-  if (!token) {
-      return res.status(401).send('Access Denied');
-  }
-  try {
-      const data = jwt.verify(token, jwtSecret);
-      req.user = data.user;
-      next();
-  } catch (error) {
-      return res.status(401).send('Invalid Token');
-  }
-};
-
 // SignUp route
 router.post('/submitSignUp', async (req, res) => {
     try {

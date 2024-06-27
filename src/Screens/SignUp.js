@@ -24,7 +24,7 @@ const SignUpForm = () => {
   
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
-      alert("Pasword and Confirm Password fileds don't match!");
+      alert("Pasword and Confirm Password fields don't match!");
       return;
     }
   

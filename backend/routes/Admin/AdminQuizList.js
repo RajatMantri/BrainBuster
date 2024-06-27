@@ -6,11 +6,10 @@ app=express;
 
 router.get('/quizzes/', async (req, res) => {
     const username = req.body.username;
-    console.log(req.body);
+    //console.log(req.body);
     try {
       // Find quizzes by username
       const quizzes = await Quiz.find({ 'username': username });
-      // console.log(quizzes);
       if (!quizzes) {
         return res.status(404).json({ message: 'No quizzes found for the specified username' });
       }
