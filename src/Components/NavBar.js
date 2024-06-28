@@ -18,6 +18,7 @@ const NavBar = (props) => {
     const handleLogOut = ()=>{
         localStorage.removeItem("authToken");
         localStorage.removeItem("username");
+        localStorage.removeItem("type");
         navigate("/");
     }
     
@@ -39,7 +40,7 @@ const NavBar = (props) => {
                     )}
 
                     {props.type === 'student' && (
-                        <Link to={`/studentHome/PreviousTeam/`} className="link-button"><button>Previous Teams</button></Link>
+                        <Link to={`/studentHome/PreviousTeam/`} className="link-button"><button>Teams</button></Link>
                     )}
 
                     {props.type === 'student' && (

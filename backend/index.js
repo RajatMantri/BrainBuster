@@ -24,7 +24,14 @@ app.use('/api', require('./routes/Admin/DeleteQuiz.js'));
 app.use('/api', require('./routes/Admin/AdminTeamList.js'));
 app.use('/api', require('./routes/Admin/AddQuizToTeams.js'));
 app.use('/api', require('./routes/Admin/DeleteTeam.js'));
-app.use('/api', require('./routes/Admin/CreateTeam.js'));
+
+
+app.use('/api', require('./routes/Student/JoinTeam.js'));
+app.use('/api', require('./routes/Student/ViewTeam.js'));
+app.use('/api', require('./routes/Student/AttemptQuiz.js'));
+app.use('/api', require('./routes/Student/AttemptedQuizzes.js'));
+app.use('/api', require('./routes/Student/ViewResult.js'));
+app.use('/api', require('./routes/Student/Leaderboard.js'));
 
 app.listen(port, () => {
   console.log(`Listening at port ${port}`);

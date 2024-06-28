@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route} from "react-router-dom";
 
-
 //Styling
 import './style/App.css'
 import './style//Login.css';
@@ -16,8 +15,12 @@ import './Screens/ScreensStyling/Admin/adminTeamList.css';
 import "./Screens/ScreensStyling/Admin/viewTeamquizzes.css"
 import "./Screens/ScreensStyling/Admin/addQuizToTeam.css"
 import "./Screens/ScreensStyling/Admin/deleteQuiz.css"
-
-
+import "./Screens/ScreensStyling/Student/joinTeam.css"
+import "./Screens/ScreensStyling/Student/viewTeams.css"
+import "./Screens/ScreensStyling/Student/attemptQuiz.css"
+import "./Screens/ScreensStyling/Student/result.css"
+import "./Screens/ScreensStyling/Student/viewResult.css"
+import "./Screens/ScreensStyling/Student/leaderboard.css"
 
 //Components
 import Home from './Screens/Home';
@@ -35,6 +38,12 @@ import DeleteQuiz from './Screens/Admin/DeleteQuiz.js';
 import AddQuizToTeam from './Screens/Admin/AddQuizToTeam.js';
 import ViewTeamQuizzes from './Screens/Admin/ViewTeamQuizzes'
 import JoinTeam from './Screens/Student/JoinTeam.js';
+import ViewTeams from "./Screens/Student/ViewTeams";
+import ViewQuizzes from './Screens/Student/ViewQuiz.js';
+import AttemptQuiz from './Screens/Student/AttemptQuiz.js';
+import Result from "./Screens/Student/Result.js"
+import ViewResult from  "./Screens/Student/ViewResult.js"
+import LeaderBoard from './Screens/Student/Leaderboard.js';
 
 const App = () => {
 
@@ -60,7 +69,13 @@ const App = () => {
         {/* Student */}
         <Route path="/studentHome" element={ <StudentHome />} />
         <Route path="/studentHome/JoinTeam" element={<JoinTeam/>} />
-        
+        <Route path="/studentHome/PreviousTeam" element={<ViewTeams/>} />
+        <Route path="/team/student/:teamId" element={<ViewQuizzes/>} />
+        <Route path="/quiz/:quizId/attempt" element={<AttemptQuiz/>} />
+        <Route path="/studentHome/Results" element={<Result/>} />
+        <Route path="/quiz/:quizId/result" element={<ViewResult/>} />
+        <Route path="/quiz/leaderboard/:quizId" element={<LeaderBoard/>} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
