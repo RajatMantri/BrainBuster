@@ -5,7 +5,7 @@ const Quiz = require('../../models/Quiz.js');
 app=express;
 
 router.get('/quizzes/show/:username', async (req, res) => {
-  //const username = req.params.username;
+  const username = req.params.username;
   try {
     const quizzes = await Quiz.find({ username: username });
     if (!quizzes || quizzes.length === 0) {

@@ -15,7 +15,7 @@ const DeleteQuiz = () => {
 
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/quizzes/`);
+      const response = await axios.get(`http://localhost:4000/api/quizzes/show/${username}`);
       setQuizzes(response.data);
     } catch (error) {
       console.error('Error fetching quizzes:', error);

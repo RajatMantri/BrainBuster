@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Team = require('../../models/Team.js');
 
-app=express;
-
 router.get('/teams/:username', async (req, res) => {
     const  {username}  = req.params;
   

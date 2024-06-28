@@ -14,6 +14,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', require('./routes/CreateUser.js'));
+
+
 app.use('/api', require('./routes/Admin/CreateQuiz.js'));
 app.use('/api', require('./routes/Admin/CreateTeam.js'));
 app.use('/api', require('./routes/Admin/AdminQuizList.js'));
@@ -23,7 +25,6 @@ app.use('/api', require('./routes/Admin/AdminTeamList.js'));
 app.use('/api', require('./routes/Admin/AddQuizToTeams.js'));
 app.use('/api', require('./routes/Admin/DeleteTeam.js'));
 app.use('/api', require('./routes/Admin/CreateTeam.js'));
-app.use('/api', require('./routes/Admin/ViewTeams.js'));
 
 app.listen(port, () => {
   console.log(`Listening at port ${port}`);
