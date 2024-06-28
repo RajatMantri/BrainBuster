@@ -6,12 +6,7 @@ app=express;
 
 router.post('/submitQuiz', async (req, res) => {
     try {
-     const username = req.body.username.username;
-     const questions = req.body.questions;
-     const title = req.body.title;
-  
-      // console.log(req.body);
-      const newQuiz = new Quiz({ username, title, questions });
+      const newQuiz = new Quiz(req.body);
       await newQuiz.save();
       res.status(201).json({ message: 'Quiz submitted successfully'});
     } catch (error) {

@@ -6,6 +6,7 @@ import NotFound from "../../Components/NotFound";
 const ViewQuiz = () => {
   const { teamId } = useParams();
   const [quizzes, setQuizzes] = useState([]);
+  const type=localStorage.getItem('type');
 
   useEffect(() => {
     fetchQuizzes();
@@ -22,7 +23,7 @@ const ViewQuiz = () => {
 
   return (
     <>
-      {localStorage.getItem('username') ? (
+      {localStorage.getItem('username')&&type==="admin" ? (
         <div className="view-quiz-container">
           <h2>Quizzes</h2>
           <ul className="quiz-list">

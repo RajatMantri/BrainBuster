@@ -5,6 +5,7 @@ import NotFound from "../../Components/NotFound";
 
 
 const Quiz = () => {
+  const type=localStorage.getItem('type');
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [quizTitle, setQuizTitle] = useState("My Quiz");
   const username = localStorage.getItem('username');
@@ -112,21 +113,20 @@ const Quiz = () => {
       title: quizTitle,
       questions: questions
     };
-    console.log(quizData);
+    // console.log(quizData);
     axios.post('http://localhost:4000/api/submitQuiz', quizData)
       .then(response => {
         navigate(`/adminHome/`);
         console.log('Quiz submitted successfully:');
       })
       .catch(error => {
-        // Handle error
         console.error('Error:', error);
       });
   };
 
   return (
     <>
-      {localStorage.getItem('username') ? (
+      {localStorage.getItem('username')&&type==="admin" ? (
         <div>
           <div className="quiz-container">
             <input className={`quiz-title ${isEditingTitle ? 'editing' : ''}`} onClick={handleTitleClick}

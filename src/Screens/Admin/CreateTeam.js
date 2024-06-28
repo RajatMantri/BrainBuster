@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const CreateTeam = () => {
   let navigate = useNavigate()
   const [teamName, setTeamName] = useState('');
+  const type=localStorage.getItem('type');
 
   const handleTeamChange = (event) => {
     setTeamName(event.target.value);
@@ -28,7 +29,7 @@ const CreateTeam = () => {
 
   return (
     <>
-      {localStorage.getItem('username') ? (
+      {localStorage.getItem('username')&&type==="admin" ? (
         <div>
           <div className="team-component">
             <form onSubmit={handleSubmit}>

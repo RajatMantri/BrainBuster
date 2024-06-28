@@ -7,6 +7,7 @@ const ViewQuiz = () => {
   const { quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
+  const type=localStorage.getItem('type');
 
   useEffect(() => {
     fetchQuiz();
@@ -35,7 +36,7 @@ const ViewQuiz = () => {
 
   return (
     <>
-      {localStorage.getItem('username') ? (
+      {localStorage.getItem('username')&&type==="admin" ? (
         <div>
           <div className="view-quiz-container">
             <h2>{quiz.title}</h2>

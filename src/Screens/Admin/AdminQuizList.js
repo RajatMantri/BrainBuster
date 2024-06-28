@@ -8,6 +8,7 @@ import NotFound from "../../Components/NotFound";
 const AdminQuizList = () => {
   const username = localStorage.getItem('username');
   const [quizzes, setQuizzes] = useState([]);
+  const type=localStorage.getItem('type');
 
   useEffect(() => {
     fetchQuizzes();
@@ -15,7 +16,7 @@ const AdminQuizList = () => {
 
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/api/quizzes`);
+      const response = await axios.get(`http://localhost:4000/api/quizzes/show/${username}`);
       setQuizzes(response.data);
     } catch (error) {
       console.error('Error fetching quizzes:', error);
@@ -34,7 +35,7 @@ const AdminQuizList = () => {
 
   return (
     <>
-      {localStorage.getItem('username') ? (
+      {localStorage.getItem('username')&&type==="admin" ? (
         <div>
           <div className="quiz-list-container">
             <h2>Quizzes associated with {username}</h2>

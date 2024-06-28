@@ -34,6 +34,7 @@ import AdminTeamList from './Screens/Admin/AdminTeamList.js';
 import DeleteQuiz from './Screens/Admin/DeleteQuiz.js';
 import AddQuizToTeam from './Screens/Admin/AddQuizToTeam.js';
 import ViewTeamQuizzes from './Screens/Admin/ViewTeamQuizzes'
+import JoinTeam from './Screens/Student/JoinTeam.js';
 
 const App = () => {
 
@@ -43,8 +44,9 @@ const App = () => {
         <Route path='/' element={<Home type='home' />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
+
+        {/* Admin */}
         <Route path="/adminHome" element={<AdminHome /> }/>
-        <Route path="/studentHome" element={ <StudentHome />} />
         <Route path="/adminHome/createQuiz" element={ <CreateQuiz /> } />
         <Route path="/adminHome/createTeam" element={<CreateTeam /> } />
         <Route path="/adminHome/quiz" element={<AdminQuizList /> } />
@@ -54,6 +56,10 @@ const App = () => {
         <Route path="quizzes/:teamId" element={<AddQuizToTeam/>} />
         <Route path="quizzes/delete/:teamId" element={<DeleteQuiz/>} />
         <Route path="team/:teamId" element={<ViewTeamQuizzes/>} />
+
+        {/* Student */}
+        <Route path="/studentHome" element={ <StudentHome />} />
+        <Route path="/studentHome/JoinTeam" element={<JoinTeam/>} />
         
         <Route path="*" element={<NotFound />} />
       </Routes>

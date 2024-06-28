@@ -6,6 +6,7 @@ import NotFound from "../../Components/NotFound";
 const TeamList = () => {
   const username = localStorage.getItem('username');
   const [teams, setTeams] = useState([]);
+  const type=localStorage.getItem('type');
 
   useEffect(() => {
     fetchTeams();
@@ -32,7 +33,7 @@ const TeamList = () => {
 
   return (
     <>
-      {localStorage.getItem('username') ? (
+      {localStorage.getItem('username')&&type==="admin" ? (
         <div className="team-list-container">
           <h2>Teams associated with {username}</h2>
           <ul>

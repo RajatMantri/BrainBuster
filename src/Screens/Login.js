@@ -24,7 +24,7 @@ const LoginForm = () => {
         const userType = response.data.user.userType;
         localStorage.setItem("username",formData.username);
         localStorage.setItem("authToken",response.data.authToken);
-      //  console.log(response);
+        localStorage.setItem("type",userType);
         
         // Navigate based on user type using useNavigate
         if (userType === 'student' ) {

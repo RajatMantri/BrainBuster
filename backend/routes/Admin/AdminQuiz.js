@@ -22,7 +22,6 @@ router.get('/quiz/:id', async (req, res) => {
 
   router.get('/teams/:teamId/quizzes', async (req, res) => {
     const { teamId } = req.params;
-    //console.log(teamId);
     try {
       const team = await Team.findById(teamId).populate('quizzes');
       if (!team) {

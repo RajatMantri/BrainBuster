@@ -7,6 +7,7 @@ const DeleteQuiz = () => {
   const [quizzes, setQuizzes] = useState([]);
   const { teamId } = useParams();
   const username = localStorage.getItem('username');
+  const type=localStorage.getItem('type');
 
   useEffect(() => {
     fetchQuizzes();
@@ -33,7 +34,7 @@ const DeleteQuiz = () => {
 
   return (
     <>
-      {localStorage.getItem('username') ? (
+      {localStorage.getItem('username')&&type==="admin" ? (
         <div className="delete-quiz-container">
           <h2>Quizzes created by {username}</h2>
           <ul className="quiz-list">

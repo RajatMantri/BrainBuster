@@ -4,6 +4,7 @@ import Footer from "../../Components/Footer";
 import NotFound from "../../Components/NotFound";
 
 const AdminHome = () => {
+    const type=localStorage.getItem('type');
     const recentQuizzes = [
         { name: "Quiz 1", score: 80 },
         { name: "Quiz 2", score: 75 },
@@ -12,7 +13,7 @@ const AdminHome = () => {
 
     return (
         <>
-            {localStorage.getItem('username') ? (
+            {localStorage.getItem('username')&&type==="admin" ? (
                 <div>
                     <NavBar type="admin" username={localStorage.getItem('username')} />
                     <div className="jumbotron">
