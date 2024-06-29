@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import NotFound from "../../Components/NotFound";
 
-
 const ViewResult = () => {
   const { quizId } = useParams();
   const username = localStorage.getItem('username');
@@ -19,8 +18,8 @@ const ViewResult = () => {
       try {
         const response = await axios.get(`http://localhost:4000/api/getResponse/${quizId}/${username}`);
         setQuizData(response.data);
-        calculateScore(response.data);
-
+        setScore(response.data.score);
+        setTotalScore(response.data.questions.length);
         const attemptNumbers = Array.from({ length: response.data.attempt + 1 }, (_, i) => i);
         setAttempts(attemptNumbers);
 
@@ -30,13 +29,15 @@ const ViewResult = () => {
     };
 
     fetchAttempts();
+    fetchQuizData(0);
   }, [quizId]);
 
   const fetchQuizData = async (attempt) => {
     try {
       const response = await axios.get(`http://localhost:4000/api/getResponse/${quizId}/${username}/${attempt}`);
       setQuizData(response.data);
-      calculateScore(response.data);
+      setScore(response.data.score);
+      setTotalScore(response.data.questions.length);
     } catch (error) {
       console.error('Error fetching quiz data:', error);
     }
@@ -46,20 +47,6 @@ const ViewResult = () => {
     const selectedAttempt = parseInt(event.target.value);
     setSelectedAttempt(selectedAttempt);
     fetchQuizData(selectedAttempt);
-  };
-
-  const calculateScore = (quiz) => {
-    let totalQuestions = quiz.questions.length;
-    let correctAnswers = 0;
-
-    quiz.questions.forEach((question) => {
-      if (question.selectedAnswer === question.correctAnswer) {
-        correctAnswers++;
-      }
-    });
-
-    setScore(correctAnswers);
-    setTotalScore(totalQuestions);
   };
 
   return (
@@ -84,16 +71,37 @@ const ViewResult = () => {
               <ul className="questions-list">
                 {quizData.questions.map((question, index) => (
                   <li key={index}>
-                    <p className="question-title">{question.title}</p>
+                    <p className="question-title">Q{index+1} {question.title}</p>
                     <ul className="options-list">
-                      {question.options.map((option, optionIndex) => (
-                        <li
-                          key={optionIndex}
-                          className={`option-item ${question.selectedAnswer === option ? (option === question.correctAnswer ? "correct" : "incorrect") : ""}`}
-                        >
-                          {option}
-                        </li>
-                      ))}
+                      {question.options.map((option, optionIndex) => {
+                        const isCorrectAnswer = optionIndex === question.correctAnswer;
+                        const isSelectedAnswer = optionIndex === (parseInt)(question.selectedAnswer);
+                        let style = {'color': ''};
+
+                        if (isSelectedAnswer) {
+                          style.color = isCorrectAnswer ? 'green' : 'red';
+                        } else if (isCorrectAnswer) {
+                          style.color = 'green';
+                        }
+
+                        return (
+                          <li key={optionIndex}>
+                            <label>
+                              <input
+                                type="radio"
+                                name={`question-${index}`}
+                                value={option}
+                                checked={isSelectedAnswer}
+                                disabled
+                                readOnly
+                              />
+                              <span style={style}>
+                                {option}
+                              </span>
+                            </label>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </li>
                 ))}

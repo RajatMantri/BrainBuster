@@ -21,17 +21,30 @@ const ViewQuiz = () => {
     }
   };
 
+  const handleDeleteQuiz = async (quizId) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/teams/${teamId}/quizzes/${quizId}`);
+      setQuizzes(quizzes.filter((quiz) => quiz._id !== quizId));
+      console.log('Quiz deleted successfully');
+    } catch (error) {
+      console.error('Error deleting quiz:', error);
+    }
+  };
+
   return (
     <>
       {localStorage.getItem('username')&&type==="admin" ? (
-        <div className="view-quiz-container">
+        <div className="quiz-list-container">
           <h2>Quizzes</h2>
-          <ul className="quiz-list">
+          <Link to={`/quizzes/${teamId}`}><button className="view-btn">Add Quiz</button></Link>
+          <ul>
             {quizzes.map((quiz) => (
-              <li key={quiz._id} className="quiz-item">
-                <Link to={`/quiz/${quiz._id}`}>
-                  <strong>Title:</strong> {quiz.title}
-                </Link>
+              <li key={quiz._id}>
+                  {quiz.title}
+                  <div>
+                <Link to={`/quiz/${quiz._id}`}><button className="view-btn">View Quiz</button></Link>
+                <button className="delete-btn" onClick={() => handleDeleteQuiz(quiz._id)}>Remove Quiz</button>
+                </div>
               </li>
             ))}
           </ul>

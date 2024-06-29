@@ -21,6 +21,8 @@ import "./Screens/ScreensStyling/Student/attemptQuiz.css"
 import "./Screens/ScreensStyling/Student/result.css"
 import "./Screens/ScreensStyling/Student/viewResult.css"
 import "./Screens/ScreensStyling/Student/leaderboard.css"
+import "./Screens/ScreensStyling/Admin/addStudent.css";
+import "./Screens/ScreensStyling/Profile.css";
 
 //Components
 import Home from './Screens/Home';
@@ -36,14 +38,17 @@ import ViewQuiz from './Screens/Admin/ViewQuiz.js';
 import AdminTeamList from './Screens/Admin/AdminTeamList.js';
 import DeleteQuiz from './Screens/Admin/DeleteQuiz.js';
 import AddQuizToTeam from './Screens/Admin/AddQuizToTeam.js';
-import ViewTeamQuizzes from './Screens/Admin/ViewTeamQuizzes'
+import ViewTeamQuizzes from './Screens/Admin/ViewTeamQuizzes';
 import JoinTeam from './Screens/Student/JoinTeam.js';
 import ViewTeams from "./Screens/Student/ViewTeams";
 import ViewQuizzes from './Screens/Student/ViewQuiz.js';
 import AttemptQuiz from './Screens/Student/AttemptQuiz.js';
-import Result from "./Screens/Student/Result.js"
+import Result from "./Screens/Student/Result.js";
 import ViewResult from  "./Screens/Student/ViewResult.js"
 import LeaderBoard from './Screens/Student/Leaderboard.js';
+import ViewTeamStudent from './Screens/Admin/ViewTeamStudent.js';
+import AddStudent from './Screens/Admin/AddStudent.js';
+import Profile from './Screens/Profile.js';
 
 const App = () => {
 
@@ -53,6 +58,7 @@ const App = () => {
         <Route path='/' element={<Home type='home' />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
+        <Route path='/profile/:username' element={<Profile />} />
 
         {/* Admin */}
         <Route path="/adminHome" element={<AdminHome /> }/>
@@ -65,6 +71,8 @@ const App = () => {
         <Route path="quizzes/:teamId" element={<AddQuizToTeam/>} />
         <Route path="quizzes/delete/:teamId" element={<DeleteQuiz/>} />
         <Route path="team/:teamId" element={<ViewTeamQuizzes/>} />
+        <Route path="team/manageStudent/:teamId" element={<ViewTeamStudent/>} />
+        <Route path="/teams/:teamId/add-student" element={<AddStudent/>} />
 
         {/* Student */}
         <Route path="/studentHome" element={ <StudentHome />} />

@@ -34,20 +34,16 @@ const TeamList = () => {
   return (
     <>
       {localStorage.getItem('username')&&type==="admin" ? (
-        <div className="team-list-container">
-          <h2>Teams associated with {username}</h2>
+        <div className="quiz-list-container">
+          <h2>Teams</h2>
           <ul>
             {teams.map((team) => (
-              <li key={team._id} className="team-item">
-                <h3>Team Name: {team.teamName}</h3>
-                <p><strong>Team Code:</strong> {team.Code}</p>
-                <p><strong>Owner:</strong> {team.Owner}</p>
-                <p><strong>Students:</strong> {team.Students.join(', ')}</p>
+              <li key={team._id}>
+                <h3>{team.teamName}</h3>
                 <div>
-                  <button className="team-item-buttons_r" onClick={() => handleDeleteTeam(team._id)}>Delete Team</button>
-                  <Link to={`/team/${team._id}`}><button className="team-item-buttons">View Quiz</button></Link>
-                  <Link to={`/quizzes/${team._id}`}><button className="team-item-buttons">Add Quiz</button></Link>
-                  <Link to={`/quizzes/delete/${team._id}`}><button className="team-item-buttons_r">Delete Quiz</button></Link>
+                  <button className="delete-btn" onClick={() => handleDeleteTeam(team._id)}>Delete Team</button>
+                    <Link to={`/team/${team._id}`}><button className="view-btn">Manage Quiz</button></Link>
+                    <Link to={`/team/manageStudent/${team._id}`}><button className="view-btn">Manage Student</button></Link>
                 </div>
               </li>
             ))}

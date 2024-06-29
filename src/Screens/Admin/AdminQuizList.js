@@ -38,7 +38,7 @@ const AdminQuizList = () => {
       {localStorage.getItem('username')&&type==="admin" ? (
         <div>
           <div className="quiz-list-container">
-            <h2>Quizzes associated with {username}</h2>
+            <h2>Quizzes</h2>
             <ul>
               {quizzes.map((quiz) => (
                 <li key={quiz._id}>

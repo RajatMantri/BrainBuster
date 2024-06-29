@@ -42,7 +42,7 @@ const AttemptQuiz = () => {
         } catch (error) {
             console.error('Error submitting quiz:', error);
         }
-        nav('/studentHome/PreviousTeam');
+        nav('/studentHome');
     };
 
     if (!quiz) {

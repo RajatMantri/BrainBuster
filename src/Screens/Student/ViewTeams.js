@@ -26,7 +26,7 @@ const PreviousTeamStudent = () => {
             {localStorage.getItem('username') && type === "student" ? (
                 <div className="previousTeamStudentContainer">
                     <div>
-                        <h2 className="previousTeamStudentHeading">Teams associated with {username}</h2>
+                        <h2 className="previousTeamStudentHeading">Teams </h2>
                         <ul className="previousTeamStudentList">
                             {teams.map((team) => (
                                 <li key={team._id} className="previousTeamStudentItem">

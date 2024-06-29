@@ -7,7 +7,7 @@ const ViewQuiz = () => {
   const { quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
-  const type=localStorage.getItem('type');
+  const type = localStorage.getItem('type');
 
   useEffect(() => {
     fetchQuiz();
@@ -33,10 +33,19 @@ const ViewQuiz = () => {
     return <div>Loading...</div>;
   }
 
+  const getOptionStyle = (question, index) => {
+    if (question.correctAnswer === index) {
+      return { color: 'green' };
+    }
+    if (answers[question._id] === index) {
+      return { color: 'red' };
+    }
+    return {};
+  };
 
   return (
     <>
-      {localStorage.getItem('username')&&type==="admin" ? (
+      {localStorage.getItem('username') && type === "admin" ? (
         <div>
           <div className="view-quiz-container">
             <h2>{quiz.title}</h2>
@@ -48,12 +57,12 @@ const ViewQuiz = () => {
                     <ul>
                       {question.options.map((option, index) => (
                         <div key={index}>
-                          <label>
+                          <label style={getOptionStyle(question, index)}>
                             <input
                               type="radio"
                               name={`question-${question._id}`}
                               value={index}
-                              checked={answers[question._id] === index}
+                              checked={(parseInt)(question.correctAnswer)=== index}
                               onChange={() => handleOptionChange(question._id, index)}
                               disabled
                             />
@@ -62,12 +71,11 @@ const ViewQuiz = () => {
                           <br />
                         </div>
                       ))}
-                      <p>Correct Answer: {question.options[question.correctAnswer]}</p>
                     </ul>
                   )}
                   {question.type === 'trueFalse' && (
                     <div>
-                      <label>
+                      <label style={getOptionStyle(question, 0)}>
                         <input
                           type="radio"
                           name={`question-${question._id}`}
@@ -79,7 +87,7 @@ const ViewQuiz = () => {
                         True
                       </label>
                       <br />
-                      <label>
+                      <label style={getOptionStyle(question, 1)}>
                         <input
                           type="radio"
                           name={`question-${question._id}`}
@@ -91,7 +99,6 @@ const ViewQuiz = () => {
                         False
                       </label>
                       <br />
-                      <p>Correct Answer: {question.correctAnswer === 0 ? 'True' : 'False'}</p>
                     </div>
                   )}
                   {question.type === 'paragraph' && (
@@ -108,6 +115,5 @@ const ViewQuiz = () => {
     </>
   );
 };
-
 
 export default ViewQuiz;

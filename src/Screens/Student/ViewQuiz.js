@@ -28,17 +28,18 @@ const ViewQuiz = () => {
       {localStorage.getItem('username') && type === 'student' ? (
         <div>
           <h2 className="quiz-heading">Quizzes</h2>
-          <ul className="quiz-list">
-            {quizzes.map((quiz) => (
-              <li key={quiz._id} className="quiz-item">
-                <strong>Title:</strong> {quiz.title}
-                {/* Add a button to attempt the quiz */}
-                <Link to={`/quiz/${quiz._id}/attempt`} className="attempt-button">
-                  <button style={{"backgroundColor":"Blue"}}>Attempt Quiz</button>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <ul className="view-quiz-list">
+      {quizzes.map((quiz) => (
+        <li key={quiz._id} className="view-quiz-item">
+          <div className="view-quiz-title-container">
+            <strong>{quiz.title}</strong>
+          </div>
+          <Link to={`/quiz/${quiz._id}/attempt`} className="view-attempt-button-link">
+            <button className="view-attempt-button">Attempt Quiz</button>
+          </Link>
+        </li>
+      ))}
+    </ul>
         </div>
       ) : (
         <NotFound />
