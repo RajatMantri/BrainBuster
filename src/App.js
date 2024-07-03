@@ -49,6 +49,8 @@ import LeaderBoard from './Screens/Student/Leaderboard.js';
 import ViewTeamStudent from './Screens/Admin/ViewTeamStudent.js';
 import AddStudent from './Screens/Admin/AddStudent.js';
 import Profile from './Screens/Profile.js';
+import AboutUs from './Components/AboutUs.js';
+import FAQ from './Components/FAQ.js';
 
 const App = () => {
 
@@ -58,6 +60,8 @@ const App = () => {
         <Route path='/' element={<Home type='home' />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signUp' element={<SignUp />} />
+        <Route path='/aboutUs' element={<AboutUs />} />
+        <Route path='/faq' element={<FAQ />} />
         <Route path='/profile/:username' element={<Profile />} />
 
         {/* Admin */}
