@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/AboutUs.css';
+import Footer from './Footer';
 
 export default function AboutUs() {
   return (
@@ -52,12 +53,7 @@ export default function AboutUs() {
           <p>The BrainBuster Team</p>
         </div>
       </div>
-
-      <footer className="about-footer">
-        <div className="about-container">
-          <p>&copy; 2024 BrainBuster. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

@@ -74,7 +74,7 @@ const App = () => {
         <Route path="/adminHome/team" element={<AdminTeamList /> } />
         <Route path="quizzes/:teamId" element={<AddQuizToTeam/>} />
         <Route path="quizzes/delete/:teamId" element={<DeleteQuiz/>} />
-        <Route path="team/:teamId" element={<ViewTeamQuizzes/>} />
+        <Route path="team/manageQuiz/:teamId" element={<ViewTeamQuizzes/>} />
         <Route path="team/manageStudent/:teamId" element={<ViewTeamStudent/>} />
         <Route path="/teams/:teamId/add-student" element={<AddStudent/>} />
 

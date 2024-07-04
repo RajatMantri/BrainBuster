@@ -21,7 +21,7 @@ const ViewQuiz = () => {
     }
   };
 
-  const handleDeleteQuiz = async (quizId) => {
+  const handleRemoveQuiz = async (quizId) => {
     try {
       await axios.delete(`http://localhost:4000/api/teams/${teamId}/quizzes/${quizId}`);
       setQuizzes(quizzes.filter((quiz) => quiz._id !== quizId));
@@ -43,7 +43,7 @@ const ViewQuiz = () => {
                   {quiz.title}
                   <div>
                 <Link to={`/quiz/${quiz._id}`}><button className="view-btn">View Quiz</button></Link>
-                <button className="delete-btn" onClick={() => handleDeleteQuiz(quiz._id)}>Remove Quiz</button>
+                <button className="delete-btn" onClick={() => handleRemoveQuiz(quiz._id)}>Remove Quiz</button>
                 </div>
               </li>
             ))}

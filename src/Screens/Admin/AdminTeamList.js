@@ -42,7 +42,7 @@ const TeamList = () => {
                 <h3>{team.teamName}</h3>
                 <div>
                   <button className="delete-btn" onClick={() => handleDeleteTeam(team._id)}>Delete Team</button>
-                    <Link to={`/team/${team._id}`}><button className="view-btn">Manage Quiz</button></Link>
+                    <Link to={`/team/manageQuiz/${team._id}`}><button className="view-btn">Manage Quiz</button></Link>
                     <Link to={`/team/manageStudent/${team._id}`}><button className="view-btn">Manage Student</button></Link>
                 </div>
               </li>
