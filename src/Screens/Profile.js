@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../Components/NavBar";
+import NotFound from "../Components/NotFound"
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -38,14 +39,13 @@ const Profile = () => {
         `http://localhost:4000/api/${username}/change-password`,
         { currentPassword, newPassword }
       );
-      console.log("Password changed successfully:", response.data);
+      alert("Password changed successfully");
       setShowChangePasswordModal(false);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
     } catch (error) {
-      console.error("Error changing password:", error);
-      // Handle error state or show an error message to the user
+      alert("Enter correct current password");
     }
   };
 
@@ -73,7 +73,7 @@ const Profile = () => {
     };
 
     fetchProfileData();
-  }, [username]); // Include username in dependency array to fetch data when username changes
+  }, [username]);
 
   if (!profileData) {
     return <p>Loading profile...</p>;
@@ -81,71 +81,78 @@ const Profile = () => {
 
   return (
     <>
-      <NavBar type={type} username={username} /> {/* Assuming NavBar handles type and username */}
-      <div className="profile-container">
-        <h2>Profile</h2>
-        <div className="profile-details">
-          <div>
-            <strong>Name:</strong> {profileData.username}
-          </div>
-          <div>
-            <strong>Phone Number:</strong> {profileData.phoneNumber}
-          </div>
-          <div>
-            <strong>Email:</strong> {profileData.email}
+      {localStorage.getItem('username')? (
+        <div>
+          <NavBar type={type} username={username} />
+          <div className="profile-container">
+            <h2>Profile</h2>
+            <div className="profile-details">
+              <div>
+                <strong>Name:</strong> {profileData.username}
+              </div>
+              <div>
+                <strong>Phone Number:</strong> {profileData.phoneNumber}
+              </div>
+              <div>
+                <strong>Email:</strong> {profileData.email}
+              </div>
+            </div>
+            <button className="change-password-btn" onClick={handleOpenModal}>
+              Change Password
+            </button>
+
+            {showChangePasswordModal && (
+              <div className="password-modal">
+                <div className="password-modal-content">
+                  <span className="close" onClick={handleCloseModal}>
+                    &times;
+                  </span>
+                  <h2>Change Password</h2>
+                  <div className="form-group">
+                    <label htmlFor="currentPassword">Current Password</label>
+                    <input
+                      type="password"
+                      id="currentPassword"
+                      name="currentPassword"
+                      placeholder="Enter current password"
+                      value={currentPassword}
+                      onChange={handlePasswordChangeInput}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="newPassword">New Password</label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      name="newPassword"
+                      placeholder="Enter new password"
+                      value={newPassword}
+                      onChange={handlePasswordChangeInput}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Confirm new password"
+                      value={confirmPassword}
+                      onChange={handlePasswordChangeInput}
+                    />
+                  </div>
+                  <button onClick={handleChangePassword}>Save</button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        <button className="change-password-btn" onClick={handleOpenModal}>
-          Change Password
-        </button>
-
-        {showChangePasswordModal && (
-          <div className="password-modal">
-            <div className="password-modal-content">
-              <span className="close" onClick={handleCloseModal}>
-                &times;
-              </span>
-              <h2>Change Password</h2>
-              <div className="form-group">
-                <label htmlFor="currentPassword">Current Password</label>
-                <input
-                  type="password"
-                  id="currentPassword"
-                  name="currentPassword"
-                  placeholder="Enter current password"
-                  value={currentPassword}
-                  onChange={handlePasswordChangeInput}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="newPassword">New Password</label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  name="newPassword"
-                  placeholder="Enter new password"
-                  value={newPassword}
-                  onChange={handlePasswordChangeInput}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder="Confirm new password"
-                  value={confirmPassword}
-                  onChange={handlePasswordChangeInput}
-                />
-              </div>
-              <button onClick={handleChangePassword}>Save</button>
-            </div>
-          </div>
-        )}
-      </div>
+      ) : (
+        <NotFound />
+      )}
     </>
   );
 };
+
 
 export default Profile;

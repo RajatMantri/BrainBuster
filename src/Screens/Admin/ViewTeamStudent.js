@@ -9,23 +9,20 @@ const ViewTeamStudent = () => {
   const type = localStorage.getItem('type');
 
   useEffect(() => {
-    // Fetch students added to the team
     axios.get(`http://localhost:4000/api/teams/${teamId}/students`)
       .then(response => {
-        // console.log(response.data);
-        setStudents(response.data); // Assuming response.data is an array of students
+        setStudents(response.data);
       })
       .catch(error => {
         console.error('Error fetching students:', error);
       });
   }, [teamId]);
 
-  // Function to remove a student from the team
   const removeStudent = (studentName) => {
     axios.delete(`http://localhost:4000/api/teams/${teamId}/students/${studentName}`)
       .then(response => {
-        // Update students state after successful removal
         setStudents(students.filter(student => student !== studentName));
+        alert("Student removed successfully");
       })
       .catch(error => {
         console.error('Error removing student:', error);

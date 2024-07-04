@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/AboutUs.css'; // Ensure the CSS file is correctly imported
+import '../style/AboutUs.css';
 
 export default function AboutUs() {
   return (
@@ -14,18 +14,18 @@ export default function AboutUs() {
         <div className="about-content">
           <h2>Welcome to BrainBuster!</h2>
           <p>
-            At BrainBuster, we believe that learning should be fun, engaging, and accessible to everyone. 
-            Whether you're a trivia enthusiast, a student preparing for exams, or someone who loves a good 
+            At BrainBuster, we believe that learning should be fun, engaging, and accessible to everyone.
+            Whether you're a trivia enthusiast, a student preparing for exams, or someone who loves a good
             challenge, our platform is designed to provide an enriching and entertaining experience for all.
           </p>
-          
+
           <h2>Our Mission</h2>
           <p>
-            Our mission is to create an interactive and dynamic learning environment where users can test 
-            their knowledge, learn new facts, and compete with others from around the world. We strive to 
+            Our mission is to create an interactive and dynamic learning environment where users can test
+            their knowledge, learn new facts, and compete with others from around the world. We strive to
             make education enjoyable and to foster a community of curious minds.
           </p>
-          
+
           <h2>What We Offer</h2>
           <ul>
             <li>
@@ -43,11 +43,11 @@ export default function AboutUs() {
           </ul>
           <h2>Join Us</h2>
           <p>
-            Become a part of the BrainBuster community today and embark on a journey of knowledge and fun. Whether you're 
-            here to challenge yourself or to learn something new, we have something for everyone. Let's make learning 
+            Become a part of the BrainBuster community today and embark on a journey of knowledge and fun. Whether you're
+            here to challenge yourself or to learn something new, we have something for everyone. Let's make learning
             an adventure together!
           </p>
-          
+
           <p><strong>Happy Quizzing!</strong></p>
           <p>The BrainBuster Team</p>
         </div>

@@ -25,7 +25,7 @@ const NavBar = (props) => {
         <>
             <nav className="navbar">
                 <div className="navbar-brand">
-                    <h1>BrainBusters</h1>
+                    <h1>BrainBuster</h1>
                     <Link to="/" className="home-button">Home</Link>
                     <Link to="/aboutUs" className="home-button">About Us</Link>
                     <Link to="/faq" className="home-button">FAQs</Link>

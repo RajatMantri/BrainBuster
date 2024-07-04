@@ -5,7 +5,6 @@ const User = require('../models/User.js');
 
 router.get('/profile/:username', async (req, res) => {
     const { username } = req.params;
- console.log(username);
         try {
           const user = await User.findOne({ username });
       

@@ -36,7 +36,6 @@ const SignUpForm = () => {
     }
   
     try {
-      // Update the URL to match the server's route
 
       const response = await axios.post('http://localhost:4000/api/submitSignUp', formData);
       console.log(response);

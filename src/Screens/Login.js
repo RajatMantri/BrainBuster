@@ -12,30 +12,30 @@ const LoginForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({...prevFormData,[name]: value}));
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:4000/api/submitLogin', formData);
-      
+
       if (response.status === 200) {
         const userType = response.data.user.userType;
-        localStorage.setItem("username",formData.username);
-        localStorage.setItem("authToken",response.data.authToken);
-        localStorage.setItem("type",userType);
-        
+        localStorage.setItem("username", formData.username);
+        localStorage.setItem("authToken", response.data.authToken);
+        localStorage.setItem("type", userType);
+
         // Navigate based on user type using useNavigate
-        if (userType === 'student' ) {
+        if (userType === 'student') {
           navigate(`/studentHome`);
-        } else if(userType === 'admin' ){
+        } else if (userType === 'admin') {
           navigate(`/adminHome`);
         }
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      if (error.response && error.response.status === 400 ) {
+      if (error.response && error.response.status === 400) {
         alert('Invalid Email or Password');
       } else {
         alert('Error submitting form. Please try again later.');
@@ -62,4 +62,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
- 
