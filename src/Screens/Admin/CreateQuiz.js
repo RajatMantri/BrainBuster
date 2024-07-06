@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import NotFound from "../../Components/NotFound";
 
 
@@ -8,6 +8,7 @@ const Quiz = () => {
   const type=localStorage.getItem('type');
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [quizTitle, setQuizTitle] = useState("My Quiz");
+  const [quizDuration, setQuizDuration] = useState(10); // Initial duration in minutes
   const username = localStorage.getItem('username');
   const [questions, setQuestions] = useState([
     {
@@ -31,6 +32,11 @@ const Quiz = () => {
 
   const handleTitleBlur = () => {
     setIsEditingTitle(false);
+  };
+
+  const handleQuizDurationChange = (e) => {
+    const duration = parseInt(e.target.value);
+    setQuizDuration(duration);
   };
 
   const handleQuestionTitleChange = (index, e) => {
@@ -111,7 +117,8 @@ const Quiz = () => {
     const quizData = {
       username: username,
       title: quizTitle,
-      questions: questions
+      duration: quizDuration,
+      questions: questions,
     };
     // console.log(quizData);
     axios.post('http://localhost:4000/api/submitQuiz', quizData)
@@ -126,7 +133,7 @@ const Quiz = () => {
 
   return (
     <>
-      {localStorage.getItem('username')&&type==="admin" ? (
+      {localStorage.getItem('username') && type === "admin" ? (
         <div>
           <div className="quiz-container">
             <input className={`quiz-title ${isEditingTitle ? 'editing' : ''}`} onClick={handleTitleClick}
@@ -136,6 +143,17 @@ const Quiz = () => {
               onBlur={handleTitleBlur}
               autoFocus
             />
+
+            <div className="duration-container">
+              <label>Quiz Duration (minutes):</label>
+              <input
+                type="number"
+                value={quizDuration}
+                onChange={handleQuizDurationChange}
+                min="1"
+                step="1"
+              />
+            </div>
 
             {questions.map((question, index) => (
               <div key={question.id} className="question-container">

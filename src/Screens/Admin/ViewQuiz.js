@@ -49,6 +49,7 @@ const ViewQuiz = () => {
         <div>
           <div className="view-quiz-container">
             <h2>{quiz.title}</h2>
+            <p>Duration: {quiz.duration} minutes</p>
             <ol>
               {quiz.questions.map((question) => (
                 <li key={question._id}>
