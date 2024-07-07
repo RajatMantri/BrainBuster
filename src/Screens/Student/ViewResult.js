@@ -32,6 +32,12 @@ const ViewResult = () => {
     fetchQuizData(0);
   }, [quizId]);
 
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}m ${remainingSeconds}s`;
+  }
+
   const fetchQuizData = async (attempt) => {
     try {
       const response = await axios.get(`http://localhost:4000/api/getResponse/${quizId}/${username}/${attempt}`);
@@ -67,6 +73,7 @@ const ViewResult = () => {
           <p className="score-text">Score: {score}/{totalScore}</p>
           {quizData && (
             <div>
+            <p >Time Taken: {formatTime(quizData.timeTaken)} </p> 
               <h3>{quizData.title}</h3>
               <ul className="questions-list">
                 {quizData.questions.map((question, index) => (

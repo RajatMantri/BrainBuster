@@ -5,7 +5,10 @@ const Response = require('../../models/Response.js');
 router.post('/SaveResponse/:quizId/:username', async (req, res) => {
     try {
       const { quizId, username } = req.params;
-      const quizData = req.body;
+      const quizData = req.body.quiz;
+      const duration = parseInt(req.body.duration)*60;
+      const remaining = parseInt(req.body.time);
+      console.log('duration: '+duration+' remaining: '+remaining);
   
       // Function to calculate score
       const calculateScore = (questions) => {
@@ -33,7 +36,8 @@ router.post('/SaveResponse/:quizId/:username', async (req, res) => {
           title: quizData.title,
           attempt: existingResponse.attempt,
           questions: quizData.questions,
-          score: score // Store the calculated score
+          score: score, // Store the calculated score
+          timeTaken : duration-remaining
         });
         const savedResponse = await newResponse.save();
         res.status(200).json(savedResponse);
@@ -46,7 +50,8 @@ router.post('/SaveResponse/:quizId/:username', async (req, res) => {
           title: quizData.title,
           questions: quizData.questions,
           attempt: 0,
-          score: score // Store the calculated score
+          score: score, // Store the calculated score
+          timeTaken : duration-remaining
         });
         const savedResponse = await newResponse.save(); // Save the new response
         res.status(201).json(savedResponse);

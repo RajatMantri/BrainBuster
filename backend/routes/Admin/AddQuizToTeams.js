@@ -20,7 +20,7 @@ router.put('/:teamId/quizzes/:quizId', async (req, res) => {
         return res.json({ message: 'Quiz already added to the team' });
       }
       // Add the quiz ID to the team's quizzes array
-      team.quizzes.push(quizId);
+      team.quizzes.push({_id: quizId,title: quiz.title});
       await team.save();
   
       res.json({ message: 'Quiz added to team successfully' });

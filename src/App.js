@@ -36,7 +36,6 @@ import CreateTeam from './Screens/Admin/CreateTeam.js';
 import AdminQuizList from './Screens/Admin/AdminQuizList.js';
 import ViewQuiz from './Screens/Admin/ViewQuiz.js';
 import AdminTeamList from './Screens/Admin/AdminTeamList.js';
-import DeleteQuiz from './Screens/Admin/DeleteQuiz.js';
 import AddQuizToTeam from './Screens/Admin/AddQuizToTeam.js';
 import ViewTeamQuizzes from './Screens/Admin/ViewTeamQuizzes';
 import JoinTeam from './Screens/Student/JoinTeam.js';
@@ -73,7 +72,6 @@ const App = () => {
         <Route path="/quiz/:quizId" element={ <ViewQuiz /> } />
         <Route path="/adminHome/team" element={<AdminTeamList /> } />
         <Route path="quizzes/:teamId" element={<AddQuizToTeam/>} />
-        <Route path="quizzes/delete/:teamId" element={<DeleteQuiz/>} />
         <Route path="team/manageQuiz/:teamId" element={<ViewTeamQuizzes/>} />
         <Route path="team/manageStudent/:teamId" element={<ViewTeamStudent/>} />
         <Route path="/teams/:teamId/add-student" element={<AddStudent/>} />

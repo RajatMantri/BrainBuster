@@ -26,6 +26,12 @@ const LeaderBoard = () => {
         fetchLeaderboardData();
     }, [quizId]);
 
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}m ${remainingSeconds}s`;
+      }
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
@@ -41,6 +47,7 @@ const LeaderBoard = () => {
                                     <th>Rank</th>
                                     <th>Username</th>
                                     <th>Score</th>
+                                    <th>Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,6 +56,7 @@ const LeaderBoard = () => {
                                         <td>{index + 1}</td>
                                         <td>{response.username}</td>
                                         <td>{response.score}</td>
+                                        <td>{formatTime(response.timeTaken)}</td>
                                     </tr>
                                 ))}
                             </tbody>

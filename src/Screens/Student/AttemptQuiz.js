@@ -73,10 +73,11 @@ const AttemptQuiz = () => {
 
     const handleSubmit = async () => {
         try {
-            await axios.post(`http://localhost:4000/api/SaveResponse/${quizId}/${username}`, quiz);
+            await axios.post(`http://localhost:4000/api/SaveResponse/${quizId}/${username}`, {quiz: quiz,duration: quiz.duration,time: localStorage.getItem('remainingTime')});
             setQuizSubmitted(true); // Set a state flag if needed
             nav('/studentHome');
             // Clear remainingTime from localStorage on submission
+            console.log(localStorage.getItem('remainingTime'));
             localStorage.removeItem('remainingTime');
         } catch (error) {
             console.error('Error submitting quiz:', error);

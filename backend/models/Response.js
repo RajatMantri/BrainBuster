@@ -15,7 +15,8 @@ const responseSchema = new mongoose.Schema({
       correctAnswer: { type: mongoose.Schema.Types.Mixed, default: null },
       selectedAnswer: { type: mongoose.Schema.Types.Mixed, default: null }
     }],
-    score: { type: Number, default: 0 }
+    score: { type: Number, default: 0 },
+    timeTaken: Number
   });
 
   module.exports = mongoose.model('Response',responseSchema);

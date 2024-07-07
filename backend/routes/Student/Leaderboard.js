@@ -7,7 +7,7 @@ router.get('/leaderboard/:quizId', async (req, res) => {
       const {quizId}  = req.params;
       
       // Find responses with attempt == 0 for the specified quizId
-      const responses = await Response.find({ quizId, attempt: 0 }).sort({ score: -1 });
+      const responses = await Response.find({ quizId, attempt: 0 }).sort({  score: -1, timeTaken: 1 });
       // console.log(responses);
       // console.log(quizId);
   

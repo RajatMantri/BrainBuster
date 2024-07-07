@@ -28,7 +28,7 @@ const Result = () => {
         <div className="result-container">
             {localStorage.getItem('username') && type === "student" ? (
                 <div>
-                    <h2 className="result-heading">Attempted Quizzes</h2>
+                    <h2 className="result-heading">Results</h2>
                     {loading ? (
                         <p>Loading...</p>
                     ) : (
@@ -38,10 +38,10 @@ const Result = () => {
                                     <span className="quiz-title_r">{quiz.title}</span>
                                     <div className="buttons-container">
                                         <Link to={`/quiz/${quiz.quizId}/result`} className="button-link">
-                                            <button style={{ "backgroundColor": "green" }} className="view-result-button">View Result</button>
+                                            <button style={{ "backgroundColor": "blue" }} className="view-result-button">View Result</button>
                                         </Link>
                                         <Link to={`/quiz/leaderboard/${quiz.quizId}`} className="button-link">
-                                            <button style={{ "backgroundColor": "green" }}
+                                            <button style={{ "backgroundColor": "blue" }}
                                                 className="leaderboard-button">Leaderboard</button>
                                         </Link>
                                     </div>

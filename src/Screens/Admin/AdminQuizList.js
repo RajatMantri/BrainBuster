@@ -25,7 +25,7 @@ const AdminQuizList = () => {
 
   const handleDeleteQuiz = async (quizId) => {
     try {
-      await axios.delete(`http://localhost:4000/api/quizzes/${quizId}`);
+      await axios.delete(`http://localhost:4000/api/quizzes/${quizId}/${username}`);
       setQuizzes(quizzes.filter((quiz) => quiz._id !== quizId));
       console.log('Quiz deleted successfully');
     } catch (error) {

@@ -12,6 +12,7 @@ const quizSchema = new mongoose.Schema({
     correctAnswer: { type: mongoose.Schema.Types.Mixed, default: null },
     selectedAnswer: { type: mongoose.Schema.Types.Mixed, default: null }
   }],
+  
 });
 
 module.exports = mongoose.model('Quiz', quizSchema);

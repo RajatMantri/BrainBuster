@@ -21,12 +21,14 @@ router.get('/quiz/:id', async (req, res) => {
   });
 
   router.get('/teams/:teamId/quizzes', async (req, res) => {
-    const { teamId } = req.params;
+    const  teamId  = req.params.teamId;
+    // console.log(req.params);
     try {
-      const team = await Team.findById(teamId).populate('quizzes');
+      const team = await Team.findById(teamId);
       if (!team) {
         return res.json({ message: 'Team not found' });
       }
+      // console.log('team: '+team.quizzes);
       res.status(200).json(team.quizzes);
     } catch (error) {
       console.error('Error fetching quizzes for team:', error);
