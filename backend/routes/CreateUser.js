@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const jwtSecret = "My-Authourization-Token-Secret";
 
-// SignUp route
 router.post('/submitSignUp', async (req, res) => {
     try {
 
@@ -16,13 +15,13 @@ router.post('/submitSignUp', async (req, res) => {
     
     const formData = req.body;
       
-      // Check if the username already exists
+     
       const existingUser = await User.findOne({ username: formData.username });
       if (existingUser) {
         return res.status(400).send('Username already exists');
       }
       
-      // If the username is unique, save the new user data
+    
       const newFormData = await User.create({
         username: req.body.username,
         password: secPsswd,
@@ -37,11 +36,11 @@ router.post('/submitSignUp', async (req, res) => {
     }
   });
 
-  // Login route
+  
   router.post('/submitLogin',async(req,res)=>{
     try{
   let userData = await User.findOne({username: req.body.username})
-    // console.log(req.body);
+
     if(!userData){
        return res.status(400).json({errors: "Invalid Credentials"})
     }
@@ -55,7 +54,7 @@ router.post('/submitSignUp', async (req, res) => {
          id:userData._id
         }
     }
-  //  console.log(userData);
+ 
     const authToken = jwt.sign(data,jwtSecret);
     res.status(200).json({ success: true, user: userData,authToken:authToken });
    } catch(error){

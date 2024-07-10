@@ -13,9 +13,6 @@ h1 {
     margin-left: 3%;
 }
 
-/* Navigation Bar Styles */
-/* Updated NavBar.css */
-
 nav {
   background-color: #333;
   color: #fff;
@@ -47,6 +44,30 @@ nav ul li a:hover {
   background-color: #555;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  nav ul {
+      flex-direction: column;
+      width: 100%;
+  }
+
+  nav ul li {
+      width: 100%;
+      margin: 5px 0;
+  }
+
+  nav ul li a {
+      width: 100%;
+      display: block;
+  }
+}
+
+
 .auth-buttons {
   display: flex;
   align-items: center;
@@ -54,7 +75,7 @@ nav ul li a:hover {
 
 .auth-buttons button {
   background-color: #007bff;
-  /* Blue color for Sign Up and Sign In */
+
   color: white;
   border: none;
   padding: 10px 20px;
@@ -190,7 +211,7 @@ nav ul li a:hover {
 }
 
 /* Footer Styles */
-/* Footer Styles */
+
 footer {
     background-color: #333;
     color: #fff;
@@ -241,16 +262,16 @@ footer {
   
   .feature-content {
     display: flex;
-    flex-direction: row; /* Arrange buttons side by side */
-    justify-content: center; /* Center buttons horizontally */
-    gap: 10px; /* Add space between buttons */
+    flex-direction: row; 
+    justify-content: center; 
+    gap: 10px; 
 }
 
 .feature-content button {
-    background-color: #1f26e4; /* Green */
+    background-color: #1f26e4; 
     border: none;
     color: white;
-    padding: 10px 20px; /* Adjust padding for smaller buttons */
+    padding: 10px 20px; 
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -262,5 +283,31 @@ footer {
 }
 
 .feature-content button:hover {
-    background-color: #0026ff; /* Darker green */
+    background-color: #0026ff; 
+}
+
+@media (max-width: 768px) {
+  nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  nav ul li {
+      margin-right: 0;
+      margin-bottom: 10px;
+  }
+  .features {
+      flex-direction: column;
+      align-items: center;
+  }
+  .feature {
+      width: 80%;
+  }
+  .FooterContainer .row {
+      flex-direction: column;
+      align-items: center;
+  }
+  .FooterContainer .col-md-4 {
+      flex: 0 0 100%;
+      margin-bottom: 20px;
+  }
 }

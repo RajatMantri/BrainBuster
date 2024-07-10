@@ -36,13 +36,11 @@ router.get('/profile/:username', async (req, res) => {
         return res.status(404).json({ error: 'User not found' });
       }
   
-      // Compare the current password with the stored hashed password
       const isMatch = await bcrypt.compare(currentPassword, user.password);
       if (!isMatch) {
         return res.status(400).json({ error: 'Current password is incorrect' });
       }
   
-      // Hash the new password
       const salt = await bcrypt.genSalt(10);
       const hashedNewPassword = await bcrypt.hash(newPassword, salt);
   

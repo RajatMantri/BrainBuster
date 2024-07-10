@@ -14,12 +14,10 @@ router.post("/joinTeam/:username", async (req, res) => {
         return res.status(404).json({ message: "Team not found." });
       }
   
-      // Check if the username already exists in the team
       if (team.Students.includes(username)) {
         return res.status(400).json({ message: "Already joined the team." });
       }
-       
-    //   console.log("team: "+team);
+
       team.Students.push(username);
       await team.save();
   

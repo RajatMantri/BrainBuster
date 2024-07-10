@@ -8,9 +8,7 @@ router.get('/leaderboard/:quizId', async (req, res) => {
       
 
       const responses = await Response.find({ quizId, attempt: 0 }).sort({  score: -1, timeTaken: 1 });
-      // console.log(responses);
-      // console.log(quizId);
-  
+
       if (!responses || responses.length === 0) {
         return res.status(404).json({ error: 'No responses found' });
       }

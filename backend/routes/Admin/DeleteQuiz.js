@@ -14,7 +14,7 @@ router.delete('/quizzes/:quizId/:username', async (req, res) => {
     if (!deletedQuiz) {
       return res.status(404).json({ message: 'Quiz not found' });
     }
-        // Delete responses associated with the quizId
+    
       const deletedResponses = await Response.deleteMany({ quizId: quizId });
       
       await Team.updateMany(
@@ -33,16 +33,15 @@ router.delete('/teams/:teamId/quizzes/:quizId', async (req, res) => {
     const { teamId, quizId } = req.params;
 
     try {
-      // Find the team by its ID
+   
       const team = await Team.findById(teamId);
       if (!team) {
         return res.status(404).json({ message: 'Team not found' });
       }
   
-      // Remove the quiz with the specified quizId from the quizzes array
+  
       team.quizzes = team.quizzes.filter(quiz => quiz._id !== quizId);
   
-      // Save the updated team
       await team.save();
   
       res.status(200).json({ message: 'Quiz removed from team successfully' });

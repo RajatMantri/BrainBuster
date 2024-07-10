@@ -115,7 +115,7 @@ const ViewQuiz = () => {
                     </div>
                   )}
                   {question.type === 'paragraph' && (
-                    <p>Correct Answer: {question.correctAnswer}</p>
+                    <p style={{color: "green"}}>{question.correctAnswer}</p>
                   )}
                 </li>
               ))}

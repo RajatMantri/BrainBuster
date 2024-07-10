@@ -8,9 +8,7 @@ router.post('/SaveResponse/:quizId/:username', async (req, res) => {
       const quizData = req.body.quiz;
       const duration = parseInt(req.body.duration)*60;
       const remaining = parseInt(req.body.time);
-      //console.log('duration: '+duration+' remaining: '+remaining);
   
-      // Function to calculate score
       const calculateScore = (questions) => {
         return questions.reduce((score, question) => {
           if (question.selectedAnswer == question.correctAnswer) {
@@ -23,10 +21,8 @@ router.post('/SaveResponse/:quizId/:username', async (req, res) => {
       
       const score = calculateScore(quizData.questions);
   
-      // Check if there is an existing response for this quizId and username
       let existingResponse = await Response.findOne({ quizId, username }).sort({ attempt: -1 });
-  
-      // If there is an existing response, increment the attempt count
+
       if (existingResponse) {
         existingResponse.attempt += 1;
         const newResponse = new Response({

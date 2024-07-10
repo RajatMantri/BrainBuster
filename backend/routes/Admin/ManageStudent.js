@@ -55,14 +55,12 @@ router.post('/teams/:teamId/add-student', async (req, res) => {
       return res.status(404).json({ error: 'Team not found' });
     }
 
-    // Check if the username exists and is a student
     const user = await User.findOne({ username: username, userType: 'student' });
 
     if (!user) {
       return res.status(400).json({ error: 'Username does not exist or is not a student' });
     }
 
-    // Check if username already exists in Students array
     if (team.Students.includes(username)) {
       return res.status(400).json({ error: 'Student already exists in the team' });
     }

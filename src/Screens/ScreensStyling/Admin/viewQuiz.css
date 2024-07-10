@@ -1,5 +1,3 @@
-/* ViewQuiz.css */
-
 .view-quiz-container {
     max-width: 800px;
     margin: 50px auto;
@@ -71,3 +69,37 @@
     color: #333;
   }
   
+  @media (max-width: 768px) {
+    .view-quiz-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .view-quiz-container h2 {
+        font-size: 24px;
+    }
+
+    .view-quiz-container h3 {
+        font-size: 20px;
+    }
+
+    .view-quiz-container li h4 {
+        font-size: 18px;
+    }
+
+    .view-quiz-container li p {
+        font-size: 14px;
+    }
+
+    .view-quiz-container li ul {
+        padding-left: 15px;
+    }
+
+    .view-quiz-container li ul li {
+        padding: 6px;
+    }
+
+    .view-quiz-container li ul p {
+        font-size: 14px;
+    }
+}

@@ -31,6 +31,24 @@
     margin-bottom: 20px;
   }
   
+  .duration-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .duration-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .question-container {
+    margin-bottom: 20px;
+  }
+
   .question-input,
   .select-type,
   .option-input {
@@ -67,15 +85,15 @@
   
   .button-container {
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+    flex-wrap: wrap;
   }
   
   button {
-    margin: 5px; /* Updated margin */
+    margin: 5px;
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 15px 20px; /* Adjusted padding */
+    padding: 15px 20px; 
     text-align: center;
     text-decoration: none;
     font-size: 16px;
@@ -103,10 +121,10 @@
     background-color: #30aa00;
   }
   
-  /* Responsive styles */
+
   @media (min-width: 600px) {
     .button-container {
-      flex-wrap: nowrap; /* Revert to single line layout */
+      flex-wrap: nowrap; 
     }
   }
   

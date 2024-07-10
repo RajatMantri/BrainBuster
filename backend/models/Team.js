@@ -4,7 +4,7 @@ const teamSchema = new mongoose.Schema({
     teamName: String,
     Code: String,
     Students: [{ type: String }], 
-    Owner: String, // Owner's username of the quiz
+    Owner: String, 
     quizzes: [{_id: String, 
       title: String}] 
   });

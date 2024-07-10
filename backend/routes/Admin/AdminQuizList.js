@@ -34,7 +34,7 @@ router.get('/quizzes/show/:username', async (req, res) => {
     if (!quizzes || quizzes.length === 0) {
       return res.status(404).json({ message: 'No quizzes found for the specified username' });
     }
-    // console.log(quizzes.length);
+  
     res.status(200).json(quizzes);
 
   } catch (error) {

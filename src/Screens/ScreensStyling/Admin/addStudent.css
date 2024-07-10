@@ -64,3 +64,36 @@
     background-color: #c82333;
   }
   
+  @media (max-width: 768px) {
+    .add-student-container {
+        width: 90%;
+        max-width: 90%;
+        padding: 15px;
+        margin: 10% auto; /* Adjusted margin for smaller screens */
+        position: relative;
+        top: unset;
+        left: unset;
+        transform: none;
+    }
+
+    .add-student-heading {
+        font-size: 20px;
+    }
+
+    .add-student-input {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .add-student-buttons {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .add-student-button {
+        padding: 8px 16px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+}

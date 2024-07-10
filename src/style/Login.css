@@ -5,7 +5,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
-    /* Light gray background color */
+  
     margin-top: 11%;
 }
 
@@ -25,12 +25,12 @@
 .LogInContainer input {
     margin-bottom: 15px;
     padding: 12px;
-    /* Adjust the padding as needed */
+
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 95%;
     margin-bottom: 40px;
-    /* Take up full width */
+  
 }
 
 .LogInContainer label {
@@ -50,7 +50,7 @@
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
-    /* Take up full width */
+
 }
 
 .LogInContainer button:hover {
@@ -62,7 +62,7 @@
     margin-top: 5px;
 }
 
-/* Responsive Styles */
+
 @media (min-width: 600px) {
     .container {
         max-width: 600px;

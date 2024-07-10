@@ -12,7 +12,7 @@ router.get('/getResponse/:quizId/:username', async (req, res) => {
       if (!response) {
         return res.status(404).json({ error: 'Response not found' });
       }
-    //  console.log(response);
+
       res.status(200).json(response);
   
     } catch (error) {

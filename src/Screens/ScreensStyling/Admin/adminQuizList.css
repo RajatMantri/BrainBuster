@@ -1,5 +1,3 @@
-/* QuizList.css */
-
 .quiz-list-container {
     max-width: 800px;
     margin: 50px auto;
@@ -68,3 +66,25 @@
     background-color: #2980b9;
   }
   
+  @media (max-width: 768px) {
+    .quiz-list-container {
+        width: 90%;
+        padding: 15px;
+        margin: 40px auto; /* Adjusted margin for smaller screens */
+    }
+
+    .quiz-list-container h2 {
+        font-size: 20px;
+    }
+
+    .quiz-list-container li {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .quiz-list-container button {
+        margin: 10px 0;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}

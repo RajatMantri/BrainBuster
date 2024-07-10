@@ -51,7 +51,7 @@ const TeamList = () => {
           <ul>
             {teams.length!==0 && teams.map((team) => (
               <li key={team._id}>
-                <h3>{team.teamName}</h3>
+                <h3>{team.teamName}(Code: {team.Code})</h3>
                 <div>
                   <button className="delete-btn" onClick={() => handleDeleteTeam(team._id)}>Delete Team</button>
                   <Link to={`/team/manageQuiz/${team._id}`}><button className="view-btn">Manage Quiz</button></Link>

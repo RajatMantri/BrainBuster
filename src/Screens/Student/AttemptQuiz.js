@@ -70,7 +70,7 @@ const AttemptQuiz = () => {
 
     const handleAnswerSelection = (questionId, selectedOption) => {
         setQuiz(prevQuiz => {
-            // console.log(selectedOption);
+         
             const updatedQuestions = prevQuiz.questions.map(question => {
                 if (question._id === questionId) {
                     return { ...question, selectedAnswer: selectedOption };

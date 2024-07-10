@@ -38,9 +38,8 @@ const AddQuizToTeam = () => {
   const handleAddQuizToTeam = async (quizId) => {
     try {
       const response = await axios.put(`http://localhost:4000/api/${teamId}/quizzes/${quizId}`);
-      console.log(response.data.message); // Log success message if needed
+      console.log(response.data.message); 
 
-      // Remove the added quiz from the local state
       setQuizzes(prevQuizzes => prevQuizzes.filter(quiz => quiz._id !== quizId));
     } catch (error) {
       console.error('Error adding quiz to team:', error);

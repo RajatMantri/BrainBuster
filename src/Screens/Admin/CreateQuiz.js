@@ -138,7 +138,7 @@ const Quiz = () => {
 
     if (hasUnansweredQuestions) {
       alert('Please select a correct answer for all questions before submitting.');
-      return; // Exit early if there are unanswered questions
+      return; 
     }
 
     const quizData = {
@@ -147,7 +147,7 @@ const Quiz = () => {
       duration: quizDuration,
       questions: questions,
     };
-    // console.log(quizData);
+    
     axios.post('http://localhost:4000/api/submitQuiz', quizData)
       .then(response => {
         navigate(`/adminHome/`);
