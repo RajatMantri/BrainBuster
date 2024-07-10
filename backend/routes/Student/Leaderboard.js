@@ -6,7 +6,7 @@ router.get('/leaderboard/:quizId', async (req, res) => {
     try {
       const {quizId}  = req.params;
       
-      // Find responses with attempt == 0 for the specified quizId
+
       const responses = await Response.find({ quizId, attempt: 0 }).sort({  score: -1, timeTaken: 1 });
       // console.log(responses);
       // console.log(quizId);
@@ -15,7 +15,6 @@ router.get('/leaderboard/:quizId', async (req, res) => {
         return res.status(404).json({ error: 'No responses found' });
       }
       
-      // Send the responses data as a response
       res.status(200).json(responses);
   
     } catch (error) {

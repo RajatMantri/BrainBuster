@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 const NavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,9 +16,8 @@ const NavBar = (props) => {
     };
 
     const handleLogOut = () => {
-        localStorage.removeItem("authToken");
         localStorage.removeItem("username");
-        localStorage.removeItem("type");
+        Cookies.remove('authToken');
         navigate("/");
     }
 
@@ -26,11 +26,25 @@ const NavBar = (props) => {
             <nav className="navbar">
                 <div className="navbar-brand">
                     <h1>BrainBuster</h1>
-                    <Link to="/" className="home-button">Home</Link>
+                    {props.type === 'home' && (
+                        <>
+                            <Link to="/" className="home-button">Home</Link>
+                        </>
+                    )}
+                    {props.type === 'admin' && (
+                        <>
+                            <Link to="/adminHome" className="home-button">Home</Link>
+                        </>
+                    )}
+                    {props.type === 'student' && (
+                        <>
+                            <Link to="/studentHome" className="home-button">Home</Link>
+                        </>
+                    )}
                     <Link to="/aboutUs" className="home-button">About Us</Link>
                     <Link to="/faq" className="home-button">FAQs</Link>
                 </div>
-               
+
                 <div className="auth-buttons">
                     {props.type === 'home' && (
                         <>
@@ -47,7 +61,7 @@ const NavBar = (props) => {
                                 <button className="dropbtn">{props.username}</button>
                                 {isOpen && (
                                     <div className="dropdown-content">
-                                    <Link to={`/profile/${username}`}>My Profile</Link>
+                                        <Link to={`/profile/${username}`}>My Profile</Link>
                                         <a><div onClick={handleLogOut}>LogOut</div></a>
                                     </div>
                                 )}

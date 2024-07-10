@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NotFound from '../../Components/NotFound';
+import auth from '../../Components/Auth';
 
 const PreviousTeamStudent = () => {
     const username = localStorage.getItem('username');
     const [teams, setTeams] = useState([]);
-    const type = localStorage.getItem('type');
+    const [type, setType] = useState(undefined);
 
     useEffect(() => {
         const fetchTeams = async () => {
@@ -18,12 +19,22 @@ const PreviousTeamStudent = () => {
             }
         };
 
-        fetchTeams();
-    }, [username]); // Dependency array added to re-fetch teams when username changes
+        async function fetchData() {
+            try {
+                const userType = await auth();
+                setType(userType);
+                fetchTeams();
+            } catch (error) {
+                console.error('Error:', error.message);
+                setType(null);
+            }
+        }
 
+        fetchData();
+    }, []);
     return (
         <>
-            {localStorage.getItem('username') && type === "student" ? (
+            {type === "student" ? (
                 <div className="previousTeamStudentContainer">
                     <div>
                         <h2 className="previousTeamStudentHeading">Teams </h2>
@@ -40,7 +51,7 @@ const PreviousTeamStudent = () => {
                     </div>
                 </div>
             ) : (
-                <NotFound />
+                type === undefined ? null : <NotFound />
             )}
         </>
     );

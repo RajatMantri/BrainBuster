@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "../Components/NavBar";
 import NotFound from "../Components/NotFound"
+import auth from "../Components/Auth";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -9,7 +10,7 @@ const Profile = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const type = localStorage.getItem("type");
+  const [type, setType] = useState(undefined);
   const username = localStorage.getItem("username");
 
   const handleOpenModal = () => {
@@ -72,7 +73,18 @@ const Profile = () => {
       }
     };
 
-    fetchProfileData();
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+        fetchProfileData();
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
   }, [username]);
 
   if (!profileData) {
@@ -81,7 +93,7 @@ const Profile = () => {
 
   return (
     <>
-      {localStorage.getItem('username')? (
+      {type === "student" || type === "admin" ? (
         <div>
           <NavBar type={type} username={username} />
           <div className="profile-container">
@@ -148,7 +160,7 @@ const Profile = () => {
           </div>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

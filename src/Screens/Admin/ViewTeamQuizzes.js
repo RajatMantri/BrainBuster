@@ -2,14 +2,26 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import NotFound from "../../Components/NotFound";
+import auth from '../../Components/Auth';
 
 const ViewQuiz = () => {
   const { teamId } = useParams();
   const [quizzes, setQuizzes] = useState([]);
-  const type=localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
 
   useEffect(() => {
-    fetchQuizzes();
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+        fetchQuizzes();
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
   }, []);
 
   const fetchQuizzes = async () => {
@@ -33,24 +45,24 @@ const ViewQuiz = () => {
 
   return (
     <>
-      {localStorage.getItem('username')&&type==="admin" ? (
+      {type === "admin" ? (
         <div className="quiz-list-container">
           <h2>Quizzes</h2>
           <Link to={`/quizzes/${teamId}`}><button className="view-btn">Add Quiz</button></Link>
           <ul>
             {quizzes.map((quiz) => (
               <li key={quiz._id}>
-                  {quiz.title}
-                  <div>
-                <Link to={`/quiz/${quiz._id}`}><button className="view-btn">View Quiz</button></Link>
-                <button className="delete-btn" onClick={() => handleRemoveQuiz(quiz._id)}>Remove Quiz</button>
+                {quiz.title}
+                <div>
+                  <Link to={`/quiz/${quiz._id}`}><button className="view-btn">View Quiz</button></Link>
+                  <button className="delete-btn" onClick={() => handleRemoveQuiz(quiz._id)}>Remove Quiz</button>
                 </div>
               </li>
             ))}
           </ul>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

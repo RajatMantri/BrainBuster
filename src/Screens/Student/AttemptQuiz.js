@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import NotFound from '../../Components/NotFound';
 import { useNavigate } from 'react-router-dom';
+import auth from '../../Components/Auth';
 
 const AttemptQuiz = () => {
     const { quizId } = useParams();
@@ -11,12 +12,25 @@ const AttemptQuiz = () => {
     const [isQuizSubmitted, setQuizSubmitted] = useState(false);
     let timerInterval = null;
     const username = localStorage.getItem('username');
-    const type = localStorage.getItem('type');
+    const [type, setType] = useState(undefined);
     const nav = useNavigate();
 
     useEffect(() => {
+        async function fetchData() {
+            try {
+                const userType = await auth();
+                setType(userType);
+            } catch (error) {
+                console.error('Error:', error.message);
+                setType(null);
+            }
+        }
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
         fetchQuiz();
-        // Retrieve remainingTime from localStorage if available
         const storedRemainingTime = localStorage.getItem('remainingTime');
         if (storedRemainingTime) {
             setRemainingTime(parseInt(storedRemainingTime));
@@ -24,10 +38,7 @@ const AttemptQuiz = () => {
     }, []);
 
     useEffect(() => {
-        // Save remainingTime to localStorage whenever it changes
         localStorage.setItem('remainingTime', remainingTime.toString());
-
-        // Clear timerInterval and submit quiz when remainingTime reaches 0
         if (remainingTime <= 0 && quiz && !isQuizSubmitted) {
             clearInterval(timerInterval);
             handleSubmit();
@@ -39,11 +50,9 @@ const AttemptQuiz = () => {
             const response = await axios.get(`http://localhost:4000/api/quiz/${quizId}`);
             setQuiz(response.data);
 
-            // Initialize remainingTime from localStorage or set initial time
-            const initialTime = response.data.duration * 60 || 0; // Assuming duration is in minutes
+            const initialTime = response.data.duration * 60 || 0;
             setRemainingTime(prev => prev === 0 ? initialTime : prev);
 
-            // Start the countdown timer
             timerInterval = setInterval(() => {
                 setRemainingTime((prevTime) => {
                     if (prevTime <= 0) {
@@ -74,10 +83,8 @@ const AttemptQuiz = () => {
     const handleSubmit = async () => {
         try {
             await axios.post(`http://localhost:4000/api/SaveResponse/${quizId}/${username}`, {quiz: quiz,duration: quiz.duration,time: localStorage.getItem('remainingTime')});
-            setQuizSubmitted(true); // Set a state flag if needed
+            setQuizSubmitted(true); 
             nav('/studentHome');
-            // Clear remainingTime from localStorage on submission
-            console.log(localStorage.getItem('remainingTime'));
             localStorage.removeItem('remainingTime');
         } catch (error) {
             console.error('Error submitting quiz:', error);
@@ -90,7 +97,7 @@ const AttemptQuiz = () => {
 
     return (
         <div className="attempt-quiz-container">
-            {localStorage.getItem('username') && type === "student" ? (
+            {type === "student" ? (
                 <div>
                     <h2 className="quiz-title_f">{quiz.title}</h2>
                     <p className="timer">Time Remaining: {Math.floor(remainingTime / 60)}:{remainingTime % 60 < 10 ? `0${remainingTime % 60}` : remainingTime % 60}</p>
@@ -150,7 +157,7 @@ const AttemptQuiz = () => {
                     )}
                 </div>
             ) : (
-                <NotFound />
+                type === undefined ? null : <NotFound />
             )}
         </div>
     );

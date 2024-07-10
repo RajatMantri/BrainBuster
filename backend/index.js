@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', require('./routes/CreateUser.js'));
 app.use('/api', require('./routes/Profile.js'));
+app.use('/api', require('./routes/Auth.js'));
 
 app.use('/api', require('./routes/Admin/CreateQuiz.js'));
 app.use('/api', require('./routes/Admin/CreateTeam.js'));

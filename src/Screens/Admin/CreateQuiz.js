@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import NotFound from "../../Components/NotFound";
-
+import auth from '../../Components/Auth';
 
 const Quiz = () => {
-  const type=localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [quizTitle, setQuizTitle] = useState("My Quiz");
-  const [quizDuration, setQuizDuration] = useState(10); // Initial duration in minutes
+  const [quizDuration, setQuizDuration] = useState(10);
   const username = localStorage.getItem('username');
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   const [questions, setQuestions] = useState([
     {
       id: 1,
@@ -57,11 +72,10 @@ const Quiz = () => {
     updatedQuestions[index].type = type;
     updatedQuestions[index].options = type === 'multipleChoice' ? updatedOptions : [];
 
-    // Set correctAnswer for True/False questions
     if (type === 'trueFalse') {
-      updatedQuestions[index].correctAnswer = 0; // Default to 0 (true)
+      updatedQuestions[index].correctAnswer = 0;
     } else if (type === 'paragraph') {
-      updatedQuestions[index].correctAnswer = ''; // Clear correctAnswer for paragraph questions
+      updatedQuestions[index].correctAnswer = '';
     }
 
     setQuestions(updatedQuestions);
@@ -106,7 +120,6 @@ const Quiz = () => {
   };
 
   const handleSubmitQuiz = () => {
-    // Check if any question does not have a correctAnswer selected
     const hasUnansweredQuestions = questions.some(question => question.correctAnswer === null);
 
     if (hasUnansweredQuestions) {
@@ -133,7 +146,7 @@ const Quiz = () => {
 
   return (
     <>
-      {localStorage.getItem('username') && type === "admin" ? (
+      {type === "admin" ? (
         <div>
           <div className="quiz-container">
             <input className={`quiz-title ${isEditingTitle ? 'editing' : ''}`} onClick={handleTitleClick}
@@ -249,7 +262,7 @@ const Quiz = () => {
           </div>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

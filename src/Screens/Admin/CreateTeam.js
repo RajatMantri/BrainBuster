@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
-import axios from 'axios'; // Import Axios for making HTTP requests
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import NotFound from "../../Components/NotFound";
 import { useNavigate } from 'react-router-dom';
-
+import auth from '../../Components/Auth';
 
 const CreateTeam = () => {
   let navigate = useNavigate()
   const [teamName, setTeamName] = useState('');
-  const type=localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleTeamChange = (event) => {
     setTeamName(event.target.value);
@@ -29,7 +43,7 @@ const CreateTeam = () => {
 
   return (
     <>
-      {localStorage.getItem('username')&&type==="admin" ? (
+      {type === "admin" ? (
         <div>
           <div className="team-component">
             <form onSubmit={handleSubmit}>
@@ -46,7 +60,7 @@ const CreateTeam = () => {
           </div>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

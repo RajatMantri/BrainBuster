@@ -2,15 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import NotFound from "../../Components/NotFound";
+import auth from '../../Components/Auth';
 
 const AddQuizToTeam = () => {
   const [quizzes, setQuizzes] = useState([]);
   const teamId = useParams().teamId;
-  const type = localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
   const username = localStorage.getItem('username');
 
   useEffect(() => {
-    fetchQuizzes();
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+        fetchQuizzes();
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
   }, []);
 
   const fetchQuizzes = async () => {
@@ -36,7 +48,7 @@ const AddQuizToTeam = () => {
 
   return (
     <>
-      {localStorage.getItem('username') && type === "admin" ? (
+      {type === "admin" ? (
         <div className="add-quiz-container">
           <h2>Add Quiz to Team</h2>
           <ul className="quiz-list">
@@ -49,7 +61,7 @@ const AddQuizToTeam = () => {
           </ul>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

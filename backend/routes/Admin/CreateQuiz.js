@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Quiz = require('../../models/Quiz.js');
 
-app=express;
+
 
 router.post('/submitQuiz', async (req, res) => {
     try {

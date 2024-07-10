@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import NotFound from "../../Components/NotFound";
+import auth from "../../Components/Auth";
 
 const Result = () => {
     const [attemptedQuizzes, setAttemptedQuizzes] = useState([]);
     const [loading, setLoading] = useState(true);
     const username = localStorage.getItem('username');
-    const type = localStorage.getItem('type');
+    const [type, setType] = useState(undefined);
 
     useEffect(() => {
         const fetchAttemptedQuizzes = async () => {
@@ -21,12 +22,23 @@ const Result = () => {
             }
         };
 
-        fetchAttemptedQuizzes();
-    }, [username]);
+        async function fetchData() {
+            try {
+                const userType = await auth();
+                setType(userType);
+                fetchAttemptedQuizzes();
+            } catch (error) {
+                console.error('Error:', error.message);
+                setType(null);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     return (
         <div className="result-container">
-            {localStorage.getItem('username') && type === "student" ? (
+            {type === "student" ? (
                 <div>
                     <h2 className="result-heading">Results</h2>
                     {loading ? (
@@ -51,7 +63,7 @@ const Result = () => {
                     )}
                 </div>
             ) : (
-                <NotFound />
+                type === undefined ? null : <NotFound />
             )}
         </div>
     );

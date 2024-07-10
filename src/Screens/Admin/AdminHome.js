@@ -2,14 +2,27 @@ import React, { useEffect, useState } from "react";
 import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
 import NotFound from "../../Components/NotFound";
+import auth from "../../Components/Auth";
 import axios from 'axios';
+
 const AdminHome = () => {
-    const type = localStorage.getItem('type');
+    const [type, setType] = useState(undefined);
     const username = localStorage.getItem('username');
     const [quizzes, setQuizzes] = useState([]);
 
     useEffect(() => {
-        fetchQuizzes();
+        async function fetchData() {
+            try {
+                const userType = await auth();
+                setType(userType);
+                fetchQuizzes();
+            } catch (error) {
+                console.error('Error:', error.message);
+                setType(null);
+            }
+        }
+
+        fetchData();
     }, []);
 
     const fetchQuizzes = async () => {
@@ -30,36 +43,34 @@ const AdminHome = () => {
         recentQuizzes = quizzes;
     }
 
-    console.log(recentQuizzes);
-
     return (
         <>
-            {localStorage.getItem('username') && type === "admin" ? (
+            {type === "admin" ? (
                 <div>
-                    <NavBar type="admin" username={localStorage.getItem('username')} />
+                    <NavBar type="admin" username={username} />
                     <div className="jumbotron">
-                        <h1><u>Welcome {localStorage.getItem('username')}!</u></h1>
-                        <h2>Recent Attempted Quizzes</h2>
+                        <h1><u>Welcome {username}!</u></h1>
+                        <h2>Recently Created Quizzes</h2>
                     </div>
 
                     <div className="features">
                         {
                             recentQuizzes.map((quiz) => (
-                            <div className="feature" key={quiz._id}>
-                                <a href={`http://localhost:3000/adminHome/quiz/${quiz._id}`}>
-                                    <img src="https://static.vecteezy.com/system/resources/previews/005/083/209/non_2x/editable-flat-outline-design-of-quiz-icon-vector.jpg" alt="Feature Image" />
-                                    <div className="feature-content">
-                                        <h3 className="feature-title">{quiz.title}</h3>
-                                        <p className="feature-description">{quiz.description}</p>
-                                    </div>
-                                </a>
-                            </div>
-                        ))}
+                                <div className="feature" key={quiz._id}>
+                                    <a href={`http://localhost:3000/adminHome/quiz/${quiz._id}`}>
+                                        <img src="https://static.vecteezy.com/system/resources/previews/005/083/209/non_2x/editable-flat-outline-design-of-quiz-icon-vector.jpg" alt="Feature Image" />
+                                        <div className="feature-content">
+                                            <h3 className="feature-title">{quiz.title}</h3>
+                                            <p className="feature-description">{quiz.description}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            ))}
                     </div>
                     <Footer />
                 </div>
             ) : (
-                <NotFound />
+                type === undefined ? null : <NotFound />
             )}
         </>
     );

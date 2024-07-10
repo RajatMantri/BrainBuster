@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../style/FAQ.css'; // Ensure the CSS file is correctly imported
+import '../style/FAQ.css'; 
 
 const FAQ = () => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);

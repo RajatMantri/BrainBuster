@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NotFound from "../../Components/NotFound";
 import { useNavigate } from "react-router-dom";
+import auth from "../../Components/Auth";
 
 const JoinTeam = () => {
-    let navigate=useNavigate();
+  let navigate = useNavigate();
   const username = localStorage.getItem('username');
-  const type = localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
   const [teamName, setTeamName] = useState("");
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +48,7 @@ const JoinTeam = () => {
 
   return (
     <>
-      {localStorage.getItem('username') && type === "student" ? (
+      {type === "student" ? (
         <div className="joinTeamContainer">
           <div className="joinTeamForm">
             <h2 className="joinTeamHeading">Join a Team</h2>
@@ -68,7 +83,7 @@ const JoinTeam = () => {
           </div>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

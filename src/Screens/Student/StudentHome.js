@@ -4,12 +4,13 @@ import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
 import NotFound from "../../Components/NotFound";
 import axios from "axios";
+import auth from "../../Components/Auth";
 
 const StudentHome = () => {
     const [attemptedQuizzes, setAttemptedQuizzes] = useState([]);
     const [loading, setLoading] = useState(true);
     const username = localStorage.getItem('username');
-    const type = localStorage.getItem('type');
+    const [type, setType] = useState(undefined);
 
     useEffect(() => {
         const fetchAttemptedQuizzes = async () => {
@@ -23,8 +24,19 @@ const StudentHome = () => {
             }
         };
 
-        fetchAttemptedQuizzes();
-    }, [username]);
+        async function fetchData() {
+            try {
+                const userType = await auth();
+                setType(userType);
+                fetchAttemptedQuizzes();
+            } catch (error) {
+                console.error('Error:', error.message);
+                setType(null);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     let recentQuizzes = [];
     if (attemptedQuizzes.length >= 3) {
@@ -37,7 +49,7 @@ const StudentHome = () => {
 
     return (
         <>
-            {localStorage.getItem('username') && type === "student" ? (
+            {type === "student" ? (
                 <div>
                     <NavBar type="student" username={localStorage.getItem('username')} />
                     <div className="jumbotron">
@@ -59,7 +71,7 @@ const StudentHome = () => {
                     <Footer />
                 </div>
             ) : (
-                <NotFound />
+                type === undefined ? null : <NotFound />
             )}
         </>
     );

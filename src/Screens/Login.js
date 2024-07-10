@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -22,11 +24,18 @@ const LoginForm = () => {
 
       if (response.status === 200) {
         const userType = response.data.user.userType;
-        localStorage.setItem("username", formData.username);
-        localStorage.setItem("authToken", response.data.authToken);
-        localStorage.setItem("type", userType);
+        const authToken = response.data.authToken;
 
-        // Navigate based on user type using useNavigate
+        const options = {
+          expires: new Date(
+            Date.now() + 13 * 24 * 60 * 60 * 1000
+          ),
+          secure: true
+        };
+
+        Cookies.set('authToken', authToken, options);
+        localStorage.setItem("username", formData.username);
+
         if (userType === 'student') {
           navigate(`/studentHome`);
         } else if (userType === 'admin') {

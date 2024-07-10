@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const quizSchema = new mongoose.Schema({
   username: String,
   title: String,
-  duration: { type: Number, default: 10 }, // Duration in minutes, default set to 10
+  duration: { type: Number, default: 10 }, 
   questions: [{
     id: Number,
     title: String,

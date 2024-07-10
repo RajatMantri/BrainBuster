@@ -7,7 +7,7 @@ router.post("/joinTeam/:username", async (req, res) => {
     const { username } = req.params;
   
     try {
-      // Check if team exists with given name and code
+ 
       const team = await Team.findOne({ teamName: teamName,Code: code });
   
       if (!team) {
@@ -20,7 +20,6 @@ router.post("/joinTeam/:username", async (req, res) => {
       }
        
     //   console.log("team: "+team);
-      // Logic to add the student's username to the team
       team.Students.push(username);
       await team.save();
   

@@ -67,7 +67,6 @@ router.post('/teams/:teamId/add-student', async (req, res) => {
       return res.status(400).json({ error: 'Student already exists in the team' });
     }
 
-    // Push username into Students array
     team.Students.push(username);
 
     await team.save();

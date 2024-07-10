@@ -4,14 +4,25 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NotFound from "../../Components/NotFound";
+import auth from "../../Components/Auth";
 
 const AdminQuizList = () => {
   const username = localStorage.getItem('username');
   const [quizzes, setQuizzes] = useState([]);
-  const type=localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
 
   useEffect(() => {
-    fetchQuizzes();
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+        fetchQuizzes();
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+    fetchData();
   }, []);
 
   const fetchQuizzes = async () => {
@@ -35,7 +46,7 @@ const AdminQuizList = () => {
 
   return (
     <>
-      {localStorage.getItem('username')&&type==="admin" ? (
+      {type === "admin" ? (
         <div>
           <div className="quiz-list-container">
             <h2>Quizzes</h2>
@@ -53,7 +64,7 @@ const AdminQuizList = () => {
           </div>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

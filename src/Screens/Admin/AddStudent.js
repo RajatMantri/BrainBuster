@@ -2,21 +2,36 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import NotFound from '../../Components/NotFound';
 import { useParams, useNavigate } from 'react-router-dom';
+import auth from '../../Components/Auth';
+import { useEffect } from 'react';
 
 const AddStudent = () => {
+
   const [username, setUsername] = useState('');
   const { teamId } = useParams();
   const navigate = useNavigate();
+  const [type, setType] = useState(undefined);
 
-  const type = localStorage.getItem('type');
-  const loggedInUsername = localStorage.getItem('username');
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.post(`http://localhost:4000/api/teams/${teamId}/add-student`, { name: username });
       alert("Student added to team successfully");
-      navigate(`/team/manageStudent/${teamId}`); // Redirect to the team page after adding the student
+      navigate(`/team/manageStudent/${teamId}`);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         let a = (error.response.data.error);
@@ -32,8 +47,11 @@ const AddStudent = () => {
     setUsername(e.target.value);
   };
 
-  // Redirect to NotFound component if user is not logged in or is not an admin
-  if (!loggedInUsername || type !== 'admin') {
+  if (type === undefined) {
+    return null;
+  }
+
+  if (type !== 'admin') {
     return <NotFound />;
   }
 

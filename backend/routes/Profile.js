@@ -17,7 +17,6 @@ router.get('/profile/:username', async (req, res) => {
             phoneNumber: user.phoneNumber,
             email: user.email,
             userType: user.userType
-            // Add other fields as needed
           })
     } catch (error) {
       console.error('Error fetching profile data:', error);
@@ -31,7 +30,7 @@ router.get('/profile/:username', async (req, res) => {
     const newPassword = req.body.newPassword
    console.log(username);
     try {
-      // Find the user by username
+      
       const user = await User.findOne({ username });
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
@@ -47,7 +46,7 @@ router.get('/profile/:username', async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hashedNewPassword = await bcrypt.hash(newPassword, salt);
   
-      // Update the user's password in the database
+ 
       user.password = hashedNewPassword;
       await user.save();
   

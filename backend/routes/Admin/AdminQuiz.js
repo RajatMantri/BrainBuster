@@ -3,7 +3,7 @@ const router = express.Router();
 const Quiz = require('../../models/Quiz');
 const Team = require('../../models/Team');
 
-app=express;
+
 
 router.get('/quiz/:id', async (req, res) => {
     const { id } = req.params;

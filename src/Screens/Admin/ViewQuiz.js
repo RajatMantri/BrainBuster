@@ -2,15 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import NotFound from "../../Components/NotFound";
+import auth from '../../Components/Auth';
 
 const ViewQuiz = () => {
   const { quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
-  const type = localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
 
   useEffect(() => {
-    fetchQuiz();
+    async function fetchData() {
+      try {
+        const userType = await auth();
+        setType(userType);
+        fetchQuiz();
+      } catch (error) {
+        console.error('Error:', error.message);
+        setType(null);
+      }
+    }
+
+    fetchData();
   }, []);
 
   const fetchQuiz = async () => {
@@ -45,7 +57,7 @@ const ViewQuiz = () => {
 
   return (
     <>
-      {localStorage.getItem('username') && type === "admin" ? (
+      {type === "admin" ? (
         <div>
           <div className="view-quiz-container">
             <h2>{quiz.title}</h2>
@@ -63,7 +75,7 @@ const ViewQuiz = () => {
                               type="radio"
                               name={`question-${question._id}`}
                               value={index}
-                              checked={(parseInt)(question.correctAnswer)=== index}
+                              checked={(parseInt)(question.correctAnswer) === index}
                               onChange={() => handleOptionChange(question._id, index)}
                               disabled
                             />
@@ -111,7 +123,7 @@ const ViewQuiz = () => {
           </div>
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </>
   );

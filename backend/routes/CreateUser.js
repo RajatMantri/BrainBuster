@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User.js');
 
-app=express;
-
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const jwtSecret = "My-Authourization-Token-Secret";
@@ -59,7 +57,7 @@ router.post('/submitSignUp', async (req, res) => {
     }
   //  console.log(userData);
     const authToken = jwt.sign(data,jwtSecret);
-    return res.status(200).json({success: true,authToken: authToken,user:userData});
+    res.status(200).json({ success: true, user: userData,authToken:authToken });
    } catch(error){
       console.log(error);
    }

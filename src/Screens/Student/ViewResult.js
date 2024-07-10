@@ -2,35 +2,48 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import NotFound from "../../Components/NotFound";
+import auth from "../../Components/Auth";
 
 const ViewResult = () => {
   const { quizId } = useParams();
   const username = localStorage.getItem('username');
-  const type = localStorage.getItem('type');
+  const [type, setType] = useState(undefined);
   const [quizData, setQuizData] = useState(null);
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [attempts, setAttempts] = useState([]);
   const [selectedAttempt, setSelectedAttempt] = useState(null);
 
+  const fetchAttempts = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/getResponse/${quizId}/${username}`);
+      setQuizData(response.data);
+      setScore(response.data.score);
+      setTotalScore(response.data.questions.length);
+      const attemptNumbers = Array.from({ length: response.data.attempt + 1 }, (_, i) => i);
+      setAttempts(attemptNumbers);
+
+    } catch (error) {
+      console.error('Error fetching quiz data:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchAttempts = async () => {
+    async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:4000/api/getResponse/${quizId}/${username}`);
-        setQuizData(response.data);
-        setScore(response.data.score);
-        setTotalScore(response.data.questions.length);
-        const attemptNumbers = Array.from({ length: response.data.attempt + 1 }, (_, i) => i);
-        setAttempts(attemptNumbers);
-
+        const userType = await auth();
+        setType(userType);
+        fetchAttempts();
+        fetchQuizData(0);
       } catch (error) {
-        console.error('Error fetching quiz data:', error);
+        console.error('Error:', error.message);
+        setType(null);
       }
-    };
+    }
 
-    fetchAttempts();
-    fetchQuizData(0);
-  }, [quizId]);
+    fetchData();
+  }, []);
+
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -57,7 +70,7 @@ const ViewResult = () => {
 
   return (
     <div className="result-container">
-      {localStorage.getItem('username') && type === "student" ? (
+      {type === "student" ? (
         <div>
           <h2 className="result-heading">Quiz Result</h2>
           <div className="attempt-select">
@@ -73,17 +86,17 @@ const ViewResult = () => {
           <p className="score-text">Score: {score}/{totalScore}</p>
           {quizData && (
             <div>
-            <p >Time Taken: {formatTime(quizData.timeTaken)} </p> 
+              <p >Time Taken: {formatTime(quizData.timeTaken)} </p>
               <h3>{quizData.title}</h3>
               <ul className="questions-list">
                 {quizData.questions.map((question, index) => (
                   <li key={index}>
-                    <p className="question-title">Q{index+1} {question.title}</p>
+                    <p className="question-title">Q{index + 1} {question.title}</p>
                     <ul className="options-list">
                       {question.options.map((option, optionIndex) => {
                         const isCorrectAnswer = optionIndex === question.correctAnswer;
                         const isSelectedAnswer = optionIndex === (parseInt)(question.selectedAnswer);
-                        let style = {'color': ''};
+                        let style = { 'color': '' };
 
                         if (isSelectedAnswer) {
                           style.color = isCorrectAnswer ? 'green' : 'red';
@@ -117,7 +130,7 @@ const ViewResult = () => {
           )}
         </div>
       ) : (
-        <NotFound />
+        type === undefined ? null : <NotFound />
       )}
     </div>
   );
