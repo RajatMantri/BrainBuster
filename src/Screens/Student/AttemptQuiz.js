@@ -70,10 +70,12 @@ const AttemptQuiz = () => {
 
     const handleAnswerSelection = (questionId, selectedOption) => {
         setQuiz(prevQuiz => {
+            // console.log(selectedOption);
             const updatedQuestions = prevQuiz.questions.map(question => {
                 if (question._id === questionId) {
                     return { ...question, selectedAnswer: selectedOption };
                 }
+                
                 return question;
             });
             return { ...prevQuiz, questions: updatedQuestions };
@@ -127,14 +129,14 @@ const AttemptQuiz = () => {
                                         <input
                                             type="radio"
                                             name={`question-${question._id}`}
-                                            value="true"
+                                            value="0"
                                             onChange={(e) => handleAnswerSelection(question._id, e.target.value)}
                                         />
                                         <span className="option-text">True</span>
                                         <input
                                             type="radio"
                                             name={`question-${question._id}`}
-                                            value="false"
+                                            value="1"
                                             onChange={(e) => handleAnswerSelection(question._id, e.target.value)}
                                         />
                                         <span className="option-text">False</span>

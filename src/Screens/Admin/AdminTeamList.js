@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NotFound from "../../Components/NotFound";
 import auth from '../../Components/Auth';
+import NoDataFound from '../../Components/NoDataFound';
 
 const TeamList = () => {
   const username = localStorage.getItem('username');
@@ -48,7 +49,7 @@ const TeamList = () => {
         <div className="quiz-list-container">
           <h2>Teams</h2>
           <ul>
-            {teams.map((team) => (
+            {teams.length!==0 && teams.map((team) => (
               <li key={team._id}>
                 <h3>{team.teamName}</h3>
                 <div>
@@ -58,6 +59,8 @@ const TeamList = () => {
                 </div>
               </li>
             ))}
+
+            {teams.length===0 && <NoDataFound/>}
           </ul>
         </div>
       ) : (

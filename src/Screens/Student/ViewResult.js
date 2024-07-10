@@ -12,7 +12,7 @@ const ViewResult = () => {
   const [score, setScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [attempts, setAttempts] = useState([]);
-  const [selectedAttempt, setSelectedAttempt] = useState(null);
+  const [selectedAttempt, setSelectedAttempt] = useState(0);
 
   const fetchAttempts = async () => {
     try {
@@ -22,7 +22,6 @@ const ViewResult = () => {
       setTotalScore(response.data.questions.length);
       const attemptNumbers = Array.from({ length: response.data.attempt + 1 }, (_, i) => i);
       setAttempts(attemptNumbers);
-
     } catch (error) {
       console.error('Error fetching quiz data:', error);
     }
@@ -43,7 +42,6 @@ const ViewResult = () => {
 
     fetchData();
   }, []);
-
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -86,16 +84,16 @@ const ViewResult = () => {
           <p className="score-text">Score: {score}/{totalScore}</p>
           {quizData && (
             <div>
-              <p >Time Taken: {formatTime(quizData.timeTaken)} </p>
+              <p>Time Taken: {formatTime(quizData.timeTaken)}</p>
               <h3>{quizData.title}</h3>
               <ul className="questions-list">
                 {quizData.questions.map((question, index) => (
                   <li key={index}>
                     <p className="question-title">Q{index + 1} {question.title}</p>
                     <ul className="options-list">
-                      {question.options.map((option, optionIndex) => {
+                      {question.type !== 'paragraph' && question.options.map((option, optionIndex) => {
                         const isCorrectAnswer = optionIndex === question.correctAnswer;
-                        const isSelectedAnswer = optionIndex === (parseInt)(question.selectedAnswer);
+                        const isSelectedAnswer = optionIndex === parseInt(question.selectedAnswer);
                         let style = { 'color': '' };
 
                         if (isSelectedAnswer) {
@@ -122,6 +120,24 @@ const ViewResult = () => {
                           </li>
                         );
                       })}
+
+                      {question.type === 'paragraph' && (() => {
+                        const correctAnswer = question.correctAnswer;
+                        const selectedAnswer = question.selectedAnswer;
+
+                        return (
+                          <div>
+                            {correctAnswer === selectedAnswer ? (
+                              <div style={{ color: 'green' }}>{selectedAnswer}</div>
+                            ) : (
+                              <>
+                                <div style={{ color: 'green' }}>{correctAnswer}</div>
+                                <div style={{ color: 'red' }}>{selectedAnswer}</div>
+                              </>
+                            )}
+                          </div>
+                        );
+                      })()}
                     </ul>
                   </li>
                 ))}

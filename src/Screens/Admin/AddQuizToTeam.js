@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import NotFound from "../../Components/NotFound";
 import auth from '../../Components/Auth';
+import NoDataFound from '../../Components/NoDataFound';
 
 const AddQuizToTeam = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -52,12 +53,14 @@ const AddQuizToTeam = () => {
         <div className="add-quiz-container">
           <h2>Add Quiz to Team</h2>
           <ul className="quiz-list">
-            {quizzes.map((quiz) => (
+            {quizzes.length!==0 && quizzes.map((quiz) => (
               <li key={quiz._id} className="quiz-item">
                 {quiz.title}
                 <button style={{ backgroundColor: '#4CAF50' }} onClick={() => handleAddQuizToTeam(quiz._id)}>Add to Team</button>
               </li>
             ))}
+
+            {quizzes.length===0 && <NoDataFound/>}
           </ul>
         </div>
       ) : (

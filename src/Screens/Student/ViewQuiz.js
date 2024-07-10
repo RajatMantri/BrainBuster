@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import NotFound from '../../Components/NotFound';
 import auth from '../../Components/Auth';
+import NoDataFound from '../../Components/NoDataFound';
 
 const ViewQuiz = () => {
   const { teamId } = useParams();
@@ -39,7 +40,7 @@ const ViewQuiz = () => {
         <div>
           <h2 className="quiz-heading">Quizzes</h2>
           <ul className="view-quiz-list">
-            {quizzes.map((quiz) => (
+            {quizzes.length!==0 && quizzes.map((quiz) => (
               <li key={quiz._id} className="view-quiz-item">
                 <div className="view-quiz-title-container">
                   <strong>{quiz.title}</strong>
@@ -49,7 +50,9 @@ const ViewQuiz = () => {
                 </Link>
               </li>
             ))}
+
           </ul>
+            {quizzes.length===0 && <NoDataFound/>}
         </div>
       ) : (
         type === undefined ? null : <NotFound />

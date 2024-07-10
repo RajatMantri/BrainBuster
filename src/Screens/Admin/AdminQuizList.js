@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NotFound from "../../Components/NotFound";
 import auth from "../../Components/Auth";
+import NoDataFound from '../../Components/NoDataFound';
 
 const AdminQuizList = () => {
   const username = localStorage.getItem('username');
@@ -51,15 +52,18 @@ const AdminQuizList = () => {
           <div className="quiz-list-container">
             <h2>Quizzes</h2>
             <ul>
-              {quizzes.map((quiz) => (
+              {quizzes.length!==0 && quizzes.map((quiz) => (
                 <li key={quiz._id}>
                   {quiz.title}
                   <div>
                     <button className="delete-btn" onClick={() => handleDeleteQuiz(quiz._id)}>Delete</button>
                     <Link to={`/adminHome/quiz/${quiz._id}`}><button className="view-btn">View Quiz</button></Link>
+                    <Link to={`/quiz/leaderboard/${quiz._id}`}><button className="view-btn">Leaderboard</button></Link>
                   </div>
                 </li>
               ))}
+
+              {quizzes.length===0 && <NoDataFound/>}
             </ul>
           </div>
         </div>

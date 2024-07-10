@@ -47,7 +47,7 @@ const LeaderBoard = () => {
 
     return (
         <div className="leaderboard-container">
-            {type === 'student' ? (
+            {(type === 'student' || type === 'admin') ? (
                 <div>
                     <h2 className="leaderboard-heading">Leaderboard</h2>
                     <div className="table-container">

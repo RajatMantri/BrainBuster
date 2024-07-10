@@ -66,19 +66,33 @@ const Quiz = () => {
 
     if (type === 'multipleChoice') {
       updatedOptions = ["Option 1", "Option 2", "Option 3", "Option 4"];
+     
+      const updatedQuestions = [...questions];
+      updatedQuestions[index].type = type;
+      updatedQuestions[index].options = updatedOptions;
+      setQuestions(updatedQuestions);
     }
 
+   else if (type === 'trueFalse') {
+    updatedOptions = ["True","False"];
+     
     const updatedQuestions = [...questions];
     updatedQuestions[index].type = type;
-    updatedQuestions[index].options = type === 'multipleChoice' ? updatedOptions : [];
-
-    if (type === 'trueFalse') {
-      updatedQuestions[index].correctAnswer = 0;
-    } else if (type === 'paragraph') {
-      updatedQuestions[index].correctAnswer = '';
-    }
-
+    updatedQuestions[index].options = updatedOptions;
+    updatedQuestions[index].correctAnswer = 0;
     setQuestions(updatedQuestions);
+
+    } else if (type === 'paragraph') {
+      updatedOptions = [];
+     
+      const updatedQuestions = [...questions];
+      updatedQuestions[index].type = type;
+      updatedQuestions[index].options = updatedOptions;
+
+      updatedQuestions[index].correctAnswer = '';
+
+      setQuestions(updatedQuestions);
+    }
   };
 
   const handleOptionChange = (questionIndex, optionIndex, e) => {

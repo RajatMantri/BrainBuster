@@ -23,6 +23,7 @@ import "./Screens/ScreensStyling/Student/viewResult.css"
 import "./Screens/ScreensStyling/Student/leaderboard.css"
 import "./Screens/ScreensStyling/Admin/addStudent.css";
 import "./Screens/ScreensStyling/Profile.css";
+import "./style/NoDataFound.css";
 
 //Components
 import Home from './Screens/Home';

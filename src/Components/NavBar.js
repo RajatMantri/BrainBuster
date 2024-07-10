@@ -25,7 +25,9 @@ const NavBar = (props) => {
         <>
             <nav className="navbar">
                 <div className="navbar-brand">
-                    <h1>BrainBuster</h1>
+                    <div className="navbar-logo">
+                      <img src={`${process.env.PUBLIC_URL}/favicon.ico`}  alt="Logo" className="navbar-favicon" />
+                    </div>
                     {props.type === 'home' && (
                         <>
                             <Link to="/" className="home-button">Home</Link>

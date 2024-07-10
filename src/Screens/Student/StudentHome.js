@@ -5,6 +5,7 @@ import Footer from "../../Components/Footer";
 import NotFound from "../../Components/NotFound";
 import axios from "axios";
 import auth from "../../Components/Auth";
+import NoDataFound from "../../Components/NoDataFound";
 
 const StudentHome = () => {
     const [attemptedQuizzes, setAttemptedQuizzes] = useState([]);
@@ -57,7 +58,7 @@ const StudentHome = () => {
                         <h2>Recent Attempted Quizzes</h2>
                     </div>
                     <div className="features">
-                        {attemptedQuizzes.map((data) => (
+                        {attemptedQuizzes.length!==0 && attemptedQuizzes.map((data) => (
                             <div className="feature" key={data._id}>
                                 <img src="https://static.vecteezy.com/system/resources/previews/005/083/209/non_2x/editable-flat-outline-design-of-quiz-icon-vector.jpg" alt="Feature Image 1" />
                                 <div className="feature-content">
@@ -67,6 +68,9 @@ const StudentHome = () => {
                                 </div>
                             </div>
                         ))}
+
+                        {attemptedQuizzes.length===0 && 
+                        <NoDataFound/>}
                     </div>
                     <Footer />
                 </div>

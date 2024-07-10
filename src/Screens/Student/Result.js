@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import NotFound from "../../Components/NotFound";
 import auth from "../../Components/Auth";
+import NoDataFound from "../../Components/NoDataFound";
 
 const Result = () => {
     const [attemptedQuizzes, setAttemptedQuizzes] = useState([]);
@@ -45,7 +46,7 @@ const Result = () => {
                         <p>Loading...</p>
                     ) : (
                         <ul className="quiz-list">
-                            {attemptedQuizzes.map((quiz) => (
+                            {attemptedQuizzes.length!==0 && attemptedQuizzes.map((quiz) => (
                                 <li key={quiz._id} className="quiz-item">
                                     <span className="quiz-title_r">{quiz.title}</span>
                                     <div className="buttons-container">
@@ -59,6 +60,8 @@ const Result = () => {
                                     </div>
                                 </li>
                             ))}
+
+                            {attemptedQuizzes.length===0 && <NoDataFound/>}
                         </ul>
                     )}
                 </div>

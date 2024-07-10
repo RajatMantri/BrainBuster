@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import NotFound from '../../Components/NotFound';
 import auth from '../../Components/Auth';
+import NoDataFound from '../../Components/NoDataFound';
 
 const PreviousTeamStudent = () => {
     const username = localStorage.getItem('username');
@@ -39,7 +40,7 @@ const PreviousTeamStudent = () => {
                     <div>
                         <h2 className="previousTeamStudentHeading">Teams </h2>
                         <ul className="previousTeamStudentList">
-                            {teams.map((team) => (
+                            {teams.length!==0 && teams.map((team) => (
                                 <li key={team._id} className="previousTeamStudentItem">
                                     <h3>{team.teamName}</h3>
                                     <Link to={`/team/student/${team._id}`}>
@@ -47,6 +48,8 @@ const PreviousTeamStudent = () => {
                                     </Link>
                                 </li>
                             ))}
+
+                            {teams.length===0 && <NoDataFound />}
                         </ul>
                     </div>
                 </div>

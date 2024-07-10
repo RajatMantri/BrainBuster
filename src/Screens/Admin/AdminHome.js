@@ -4,6 +4,7 @@ import Footer from "../../Components/Footer";
 import NotFound from "../../Components/NotFound";
 import auth from "../../Components/Auth";
 import axios from 'axios';
+import NoDataFound from "../../Components/NoDataFound";
 
 const AdminHome = () => {
     const [type, setType] = useState(undefined);
@@ -54,7 +55,7 @@ const AdminHome = () => {
                     </div>
 
                     <div className="features">
-                        {
+                        {recentQuizzes.length!==0 &&
                             recentQuizzes.map((quiz) => (
                                 <div className="feature" key={quiz._id}>
                                     <a href={`http://localhost:3000/adminHome/quiz/${quiz._id}`}>
@@ -66,6 +67,10 @@ const AdminHome = () => {
                                     </a>
                                 </div>
                             ))}
+
+                        {recentQuizzes.length===0 &&
+                         <NoDataFound />
+                        }
                     </div>
                     <Footer />
                 </div>
