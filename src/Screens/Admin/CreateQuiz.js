@@ -89,7 +89,7 @@ const Quiz = () => {
       updatedQuestions[index].type = type;
       updatedQuestions[index].options = updatedOptions;
 
-      updatedQuestions[index].correctAnswer = '';
+      updatedQuestions[index].correctAnswer = null;
 
       setQuestions(updatedQuestions);
     }
@@ -123,7 +123,7 @@ const Quiz = () => {
   };
 
   const handleDeleteQuestion = (questionIndex) => {
-    const updatedQuestions = questions.filter((_, index) => index !== questionIndex);
+    const updatedQuestions = questions.filter((val, index) => index !== questionIndex);
     setQuestions(updatedQuestions.length === 0 ? [{
       id: 1,
       title: "Default Question",

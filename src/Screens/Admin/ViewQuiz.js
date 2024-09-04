@@ -34,13 +34,6 @@ const ViewQuiz = () => {
     }
   };
 
-  const handleOptionChange = (questionId, index) => {
-    setAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [questionId]: index,
-    }));
-  };
-
   if (!quiz) {
     return <div>Loading...</div>;
   }
@@ -49,9 +42,7 @@ const ViewQuiz = () => {
     if (question.correctAnswer === index) {
       return { color: 'green' };
     }
-    if (answers[question._id] === index) {
-      return { color: 'red' };
-    }
+
     return {};
   };
 
@@ -76,7 +67,7 @@ const ViewQuiz = () => {
                               name={`question-${question._id}`}
                               value={index}
                               checked={(parseInt)(question.correctAnswer) === index}
-                              onChange={() => handleOptionChange(question._id, index)}
+                              // onChange={() => handleOptionChange(question._id, index)}
                               disabled
                             />
                             {option}
@@ -93,8 +84,8 @@ const ViewQuiz = () => {
                           type="radio"
                           name={`question-${question._id}`}
                           value="true"
-                          checked={answers[question._id] === true}
-                          onChange={() => handleOptionChange(question._id, true)}
+                          checked={(parseInt)(question.correctAnswer) === 0}
+                          // onChange={() => handleOptionChange(question._id, true)}
                           disabled
                         />
                         True
@@ -105,8 +96,8 @@ const ViewQuiz = () => {
                           type="radio"
                           name={`question-${question._id}`}
                           value="false"
-                          checked={answers[question._id] === false}
-                          onChange={() => handleOptionChange(question._id, false)}
+                          checked={(question.correctAnswer) === 1}
+                          // onChange={() => handleOptionChange(question._id, false)}
                           disabled
                         />
                         False

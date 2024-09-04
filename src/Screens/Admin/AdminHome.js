@@ -5,6 +5,7 @@ import NotFound from "../../Components/NotFound";
 import auth from "../../Components/Auth";
 import axios from 'axios';
 import NoDataFound from "../../Components/NoDataFound";
+import {Link} from 'react-router-dom';
 
 const AdminHome = () => {
     const [type, setType] = useState(undefined);
@@ -58,13 +59,13 @@ const AdminHome = () => {
                         {recentQuizzes.length!==0 &&
                             recentQuizzes.map((quiz) => (
                                 <div className="feature" key={quiz._id}>
-                                    <a href={`http://localhost:3000/adminHome/quiz/${quiz._id}`}>
+                                    <Link to={`/adminHome/quiz/${quiz._id}`}>
                                         <img src="https://static.vecteezy.com/system/resources/previews/005/083/209/non_2x/editable-flat-outline-design-of-quiz-icon-vector.jpg" alt="Feature Image" />
                                         <div className="feature-content">
                                             <h3 className="feature-title">{quiz.title}</h3>
                                             <p className="feature-description">{quiz.description}</p>
                                         </div>
-                                    </a>
+                                    </Link>
                                 </div>
                             ))}
 

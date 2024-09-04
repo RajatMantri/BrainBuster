@@ -85,7 +85,7 @@ const Profile = () => {
     }
 
     fetchData();
-  }, [username]);
+  }, []);
 
   if (!profileData) {
     return <p>Loading profile...</p>;
